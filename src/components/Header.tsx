@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, Bell, ShoppingBag, Heart, Smartphone, Monitor, Sparkles, X } from 'lucide-react';
-import { ViewMode, ActiveTab } from '../types';
+import { Search, Bell, ShoppingBag, Heart, Smartphone, Monitor, Sparkles, X, User, Headphones } from 'lucide-react';
+import { ViewMode, ActiveTab, UserProfile } from '../types';
 
 interface HeaderProps {
   viewMode: ViewMode;
@@ -14,6 +14,9 @@ interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   isMobileFrame?: boolean;
+  user?: UserProfile | null;
+  onOpenAccount?: () => void;
+  onOpenSupport?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -28,6 +31,9 @@ export const Header: React.FC<HeaderProps> = ({
   searchQuery,
   onSearchChange,
   isMobileFrame = false,
+  user,
+  onOpenAccount,
+  onOpenSupport,
 }) => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
@@ -43,6 +49,15 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="text-[#fed8c9]">✦</span>
           </div>
           <div className="flex items-center space-x-4 text-[11px]">
+            {onOpenSupport && (
+              <button
+                onClick={onOpenSupport}
+                className="text-[#fed8c9] hover:underline flex items-center space-x-1"
+              >
+                <Headphones className="w-3 h-3" />
+                <span>CSKH: 1900 8899</span>
+              </button>
+            )}
             <span className="opacity-75">Thụy Sĩ • Zurich</span>
           </div>
         </div>
@@ -106,6 +121,25 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 NGHI THỨC DƯỠNG SÁNG
               </button>
+              <button
+                onClick={() => {
+                  if (onOpenAccount) onOpenAccount();
+                  else onSelectTab('account');
+                }}
+                className={`transition-colors hover:text-[#1c1c19] ${activeTab === 'account' ? 'text-[#1c1c19] font-semibold underline underline-offset-4 decoration-[#74584d]' : ''}`}
+              >
+                DANH MỤC ĐÃ MUA
+              </button>
+              {onOpenSupport && (
+                <button
+                  id="nav-support-btn"
+                  onClick={onOpenSupport}
+                  className="transition-colors text-[#74584d] hover:text-[#1c1c19] font-semibold flex items-center space-x-1"
+                >
+                  <Headphones className="w-3.5 h-3.5" />
+                  <span>CHĂM SÓC KHÁCH HÀNG</span>
+                </button>
+              )}
             </nav>
           )}
         </div>
@@ -173,6 +207,19 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
+          {/* Customer Support Button */}
+          {onOpenSupport && (
+            <button
+              id="header-support-btn"
+              onClick={onOpenSupport}
+              className="p-1.5 text-[#1c1c19] hover:bg-[#f0ede9] rounded-full transition-colors relative"
+              title="Chăm sóc khách hàng & Tư vấn da liễu 24/7"
+            >
+              <Headphones className="w-5 h-5 stroke-[1.5]" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#8a9a86] rounded-full ring-2 ring-[#fcf9f4]" />
+            </button>
+          )}
+
           {/* Notifications button with indicator dot */}
           <div className="relative">
             <button
@@ -213,6 +260,24 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             )}
           </div>
+
+          {/* User Account / Order History Button */}
+          {onOpenAccount && (
+            <button
+              id="header-account-btn"
+              onClick={onOpenAccount}
+              className="p-1.5 text-[#1c1c19] hover:bg-[#f0ede9] rounded-full transition-colors flex items-center space-x-1"
+              title={user ? `Tài khoản (${user.name}) - Xem danh mục đã mua` : 'Đăng nhập / Đăng ký'}
+            >
+              {user ? (
+                <div className="w-6 h-6 rounded-full bg-[#74584d] text-white text-[10px] font-medium flex items-center justify-center shadow-xs">
+                  {user.avatarInitials}
+                </div>
+              ) : (
+                <User className="w-5 h-5 stroke-[1.5]" />
+              )}
+            </button>
+          )}
 
           {/* Shopping Bag Button with badge matching image count '2' */}
           <button

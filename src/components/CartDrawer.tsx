@@ -1,27 +1,53 @@
-import React, { useState } from 'react';
-import { X, Trash2, ShoppingBag, ArrowRight, Check, Tag } from 'lucide-react';
-import { CartItem } from '../types';
+import React, { useState, useEffect } from 'react';
+import { X, Trash2, ShoppingBag, ArrowRight, Check, Tag, MapPin, Edit3, Phone, User, Headphones } from 'lucide-react';
+import { CartItem, UserProfile } from '../types';
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   items: CartItem[];
+  user: UserProfile | null;
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
-  onCheckoutSuccess: () => void;
+  onCheckoutSuccess: (recipientInfo?: { buyerName: string; phone: string; address: string }) => void;
+  onUpdateProfile?: (updated: { name: string; phone: string; address: string }) => void;
+  onOpenSupport?: () => void;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
   isOpen,
   onClose,
   items,
+  user,
   onUpdateQuantity,
   onRemoveItem,
   onCheckoutSuccess,
+  onUpdateProfile,
+  onOpenSupport,
 }) => {
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoMessage, setPromoMessage] = useState<{ text: string; isError: boolean } | null>(null);
+
+  // Recipient and delivery address state
+  const [buyerName, setBuyerName] = useState(user?.name || 'Phương Anh');
+  const [phone, setPhone] = useState(user?.phone || '0908 123 489');
+  const [address, setAddress] = useState(
+    user?.address ||
+      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'
+  );
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setBuyerName(user.name || 'Phương Anh');
+      setPhone(user.phone || '0908 123 489');
+      setAddress(
+        user.address ||
+          'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'
+      );
+    }
+  }, [user, isOpen]);
 
   if (!isOpen) return null;
 
@@ -42,6 +68,30 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     } else {
       setPromoMessage({ text: 'Mã giảm giá không hợp lệ. Thử: GLANZ2025', isError: true });
     }
+  };
+
+  const handleCheckout = () => {
+    const finalBuyer = buyerName.trim() || user?.name || 'Phương Anh';
+    const finalPhone = phone.trim() || user?.phone || '0908 123 489';
+    const finalAddress =
+      address.trim() ||
+      user?.address ||
+      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh';
+
+    // Also sync to profile if user is logged in
+    if (onUpdateProfile && (finalBuyer !== user?.name || finalPhone !== user?.phone || finalAddress !== user?.address)) {
+      onUpdateProfile({
+        name: finalBuyer,
+        phone: finalPhone,
+        address: finalAddress,
+      });
+    }
+
+    onCheckoutSuccess({
+      buyerName: finalBuyer,
+      phone: finalPhone,
+      address: finalAddress,
+    });
   };
 
   return (
@@ -68,44 +118,60 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         </div>
 
         {/* Free Shipping Progress */}
-        <div className="p-3.5 bg-[#f6f3ee] border-b border-[#202022]/6 text-xs">
-          {amountNeededForFreeShip > 0 ? (
-            <p className="text-[#46464a]">
-              Mua thêm <span className="font-semibold text-[#74584d]">{amountNeededForFreeShip.toLocaleString('vi-VN')}₫</span> để được <span className="font-semibold text-[#1c1c19]">Miễn Phí Vận Chuyển</span>
-            </p>
-          ) : (
-            <p className="text-[#8a9a86] font-medium flex items-center space-x-1">
-              <Check className="w-3.5 h-3.5" />
-              <span>Chúc mừng! Bạn đã nhận đặc quyền Miễn Phí Vận Chuyển.</span>
-            </p>
-          )}
-          <div className="w-full bg-[#ebe8e3] h-1.5 rounded-full mt-2 overflow-hidden">
+        <div className="bg-[#f0ede9] px-4 py-2.5 border-b border-[#202022]/6">
+          <div className="flex justify-between text-[11px] text-[#46464a] mb-1.5">
+            <span>
+              {amountNeededForFreeShip === 0 ? (
+                <span className="text-[#8a9a86] font-medium flex items-center">
+                  <Check className="w-3.5 h-3.5 mr-1" /> Bạn được MIỄN PHÍ vận chuyển
+                </span>
+              ) : (
+                <span>
+                  Mua thêm{' '}
+                  <strong className="text-[#1c1c19]">
+                    {amountNeededForFreeShip.toLocaleString('vi-VN')}₫
+                  </strong>{' '}
+                  để được Free Ship
+                </span>
+              )}
+            </span>
+            <span className="font-medium">{freeShipPercent}%</span>
+          </div>
+          <div className="w-full bg-white rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-[#74584d] h-full rounded-full transition-all duration-300"
+              className="bg-[#74584d] h-full transition-all duration-300"
               style={{ width: `${freeShipPercent}%` }}
             />
           </div>
         </div>
 
-        {/* Cart Items List */}
-        <div className="flex-grow overflow-y-auto p-4 space-y-3">
+        {/* Cart Item List */}
+        <div className="flex-grow overflow-y-auto p-4 sm:p-5 space-y-3.5">
           {items.length === 0 ? (
-            <div className="h-64 flex flex-col items-center justify-center text-center p-6">
-              <div className="w-16 h-16 rounded-full bg-[#f0ede9] flex items-center justify-center text-[#77767b] mb-3">
-                <ShoppingBag className="w-7 h-7 stroke-[1.25]" />
+            <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
+              <div className="w-16 h-16 rounded-full bg-[#f0ede9] flex items-center justify-center text-[#77767b]">
+                <ShoppingBag className="w-8 h-8 stroke-[1.5]" />
               </div>
-              <p className="font-serif text-base text-[#1c1c19]">Giỏ hàng của bạn đang trống</p>
-              <p className="text-xs text-[#77767b] mt-1 max-w-xs">
-                Khám phá các sản phẩm trong bộ sưu tập Pure Radiance 2025 để bắt đầu nghi thức dưỡng da.
+              <p className="font-serif text-base font-normal text-[#1c1c19]">
+                Giỏ hàng của bạn đang trống
               </p>
+              <p className="text-xs text-[#77767b] max-w-xs leading-relaxed">
+                Hãy lựa chọn các tinh chất thuần chay Thụy Sĩ để bắt đầu chu trình chăm sóc da.
+              </p>
+              <button
+                onClick={onClose}
+                className="mt-2 px-6 py-2.5 bg-[#202022] text-white text-xs font-semibold rounded-full hover:bg-[#08080a] transition-colors"
+              >
+                KHÁM PHÁ SẢN PHẨM
+              </button>
             </div>
           ) : (
             items.map((item) => (
               <div
                 key={item.product.id}
-                className="bg-white rounded-2xl p-3 border border-[#202022]/6 flex space-x-3 items-center"
+                className="flex items-center space-x-3.5 bg-white p-3.5 rounded-2xl border border-[#202022]/6 shadow-2xs"
               >
-                <div className="w-16 h-16 rounded-xl bg-[#f6f3ee] overflow-hidden shrink-0">
+                <div className="w-16 h-16 rounded-xl bg-[#f6f3ee] overflow-hidden shrink-0 border border-[#202022]/6">
                   <img
                     src={item.product.image}
                     alt={item.product.name}
@@ -117,43 +183,45 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   />
                 </div>
 
-                <div className="flex-grow min-w-0">
-                  <h4 className="font-serif text-xs sm:text-sm font-medium text-[#1c1c19] truncate">
-                    {item.product.name}
-                  </h4>
-                  <div className="text-[10px] text-[#77767b] uppercase tracking-wider">
-                    {item.product.capacity}
-                  </div>
-                  <div className="text-xs font-semibold text-[#1c1c19] mt-1">
-                    {item.product.price.toLocaleString('vi-VN')}₫
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-end space-y-2">
-                  <button
-                    onClick={() => onRemoveItem(item.product.id)}
-                    className="text-[#77767b] hover:text-[#ba1a1a] p-1 transition-colors"
-                    title="Xóa"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-
-                  <div className="flex items-center space-x-2 bg-[#f6f3ee] rounded-full px-2 py-0.5 border border-[#ebe8e3]">
+                <div className="flex-grow min-w-0 space-y-1">
+                  <div className="flex items-start justify-between">
+                    <h4 className="font-serif text-xs font-normal text-[#1c1c19] truncate pr-2">
+                      {item.product.name}
+                    </h4>
                     <button
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
-                      className="text-xs text-[#46464a] px-1 hover:text-[#1c1c19]"
+                      onClick={() => onRemoveItem(item.product.id)}
+                      className="text-[#77767b] hover:text-[#ba1a1a] p-1 transition-colors"
+                      title="Xóa"
                     >
-                      -
+                      <Trash2 className="w-3.5 h-3.5" />
                     </button>
-                    <span className="text-[11px] font-medium w-4 text-center">
-                      {item.quantity}
+                  </div>
+
+                  <p className="text-[10px] text-[#77767b]">{item.product.capacity}</p>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="text-xs font-semibold text-[#1c1c19]">
+                      {(item.product.price * item.quantity).toLocaleString('vi-VN')}₫
                     </span>
-                    <button
-                      onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
-                      className="text-xs text-[#46464a] px-1 hover:text-[#1c1c19]"
-                    >
-                      +
-                    </button>
+
+                    {/* Quantity Selector */}
+                    <div className="flex items-center space-x-2 bg-[#f6f3ee] rounded-full px-2 py-0.5 border border-[#ebe8e3]">
+                      <button
+                        onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
+                        className="text-xs text-[#46464a] px-1 hover:text-[#1c1c19]"
+                      >
+                        -
+                      </button>
+                      <span className="text-xs font-medium text-[#1c1c19] w-4 text-center">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
+                        className="text-xs text-[#46464a] px-1 hover:text-[#1c1c19]"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -194,8 +262,104 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </p>
             )}
 
+            {/* Recipient & Delivery Address Card */}
+            <div className="bg-[#fcf9f4] rounded-2xl p-3 border border-[#ebe8e3] text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-1.5 text-[#1c1c19] font-medium text-[11px]">
+                  <MapPin className="w-3.5 h-3.5 text-[#74584d]" />
+                  <span>Địa chỉ nhận hàng:</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsEditingAddress(!isEditingAddress)}
+                  className="text-[#74584d] hover:underline font-semibold text-[11px] flex items-center space-x-1"
+                >
+                  <Edit3 className="w-3 h-3" />
+                  <span>{isEditingAddress ? 'Thu gọn' : 'Đổi thông tin'}</span>
+                </button>
+              </div>
+
+              {!isEditingAddress ? (
+                <div className="text-[11px] text-[#46464a] space-y-0.5 pl-5">
+                  <div className="font-medium text-[#1c1c19]">
+                    {buyerName} • {phone}
+                  </div>
+                  <div className="text-[#77767b] leading-relaxed line-clamp-2">
+                    {address}
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-2 pt-1 border-t border-[#ebe8e3] animate-fadeIn">
+                  <div>
+                    <label className="text-[10px] font-medium text-[#77767b] block mb-0.5">
+                      Tên người mua / nhận hàng
+                    </label>
+                    <input
+                      type="text"
+                      value={buyerName}
+                      onChange={(e) => setBuyerName(e.target.value)}
+                      placeholder="Họ và tên người nhận"
+                      className="w-full text-xs px-2.5 py-1.5 bg-white rounded-lg border border-[#ebe8e3] focus:outline-none focus:ring-1 focus:ring-[#74584d] text-[#1c1c19]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-medium text-[#77767b] block mb-0.5">
+                      Số điện thoại nhận hàng
+                    </label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="0908 123 489"
+                      className="w-full text-xs px-2.5 py-1.5 bg-white rounded-lg border border-[#ebe8e3] focus:outline-none focus:ring-1 focus:ring-[#74584d] text-[#1c1c19]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[10px] font-medium text-[#77767b] block mb-0.5">
+                      Địa chỉ nhận hàng chi tiết
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      placeholder="Số nhà, tên đường, phường, quận, thành phố"
+                      className="w-full text-xs px-2.5 py-1.5 bg-white rounded-lg border border-[#ebe8e3] focus:outline-none focus:ring-1 focus:ring-[#74584d] text-[#1c1c19]"
+                    />
+                  </div>
+
+                  <div className="flex justify-between items-center pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAddress(
+                          'Tòa nhà Landmark 81, 720A Điện Biên Phủ, P. 22, Bình Thạnh, TP. Hồ Chí Minh'
+                        );
+                      }}
+                      className="text-[10px] text-[#74584d] hover:underline"
+                    >
+                      Đặt lại mặc định
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (onUpdateProfile) {
+                          onUpdateProfile({ name: buyerName, phone, address });
+                        }
+                        setIsEditingAddress(false);
+                      }}
+                      className="px-3 py-1 bg-[#202022] text-white rounded-full text-[10px] font-semibold tracking-wider hover:bg-black"
+                    >
+                      Xác nhận đổi
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Calculations */}
-            <div className="space-y-1.5 text-xs text-[#46464a] pt-2 border-t border-[#f0ede9]">
+            <div className="space-y-1.5 text-xs text-[#46464a] pt-1 border-t border-[#f0ede9]">
               <div className="flex justify-between">
                 <span>Tạm tính</span>
                 <span className="font-medium text-[#1c1c19]">{subtotal.toLocaleString('vi-VN')}₫</span>
@@ -225,12 +389,33 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             {/* Checkout Button */}
             <button
               id="cart-checkout-btn"
-              onClick={onCheckoutSuccess}
+              onClick={handleCheckout}
               className="w-full py-3 bg-[#202022] hover:bg-[#08080a] text-white rounded-full text-xs font-semibold tracking-wider flex items-center justify-center space-x-2 transition-all shadow-md active:scale-98"
             >
               <span>TIẾN HÀNH ĐẶT HÀNG</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+
+            {/* Customer Care Hotline Hint */}
+            <div className="pt-1 text-center">
+              {onOpenSupport ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenSupport();
+                  }}
+                  className="inline-flex items-center space-x-1 text-[11px] text-[#77767b] hover:text-[#74584d] transition-colors"
+                >
+                  <Headphones className="w-3 h-3 text-[#74584d]" />
+                  <span>Cần tư vấn da liễu trước khi mua? Liên hệ CSKH 24/7</span>
+                </button>
+              ) : (
+                <span className="text-[11px] text-[#77767b]">
+                  Hotline CSKH: <strong className="text-[#1c1c19]">1900 8899</strong> (Miễn phí)
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>

@@ -1,16 +1,26 @@
 import React from 'react';
-import { CheckCircle2, Sparkles, X, Package } from 'lucide-react';
+import { CheckCircle2, Sparkles, X, Package, MapPin, Headphones } from 'lucide-react';
 
 interface CheckoutSuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
   orderNumber: string;
+  recipientName?: string;
+  phone?: string;
+  shippingAddress?: string;
+  onViewOrders?: () => void;
+  onOpenSupport?: () => void;
 }
 
 export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
   isOpen,
   onClose,
   orderNumber,
+  recipientName,
+  phone,
+  shippingAddress,
+  onViewOrders,
+  onOpenSupport,
 }) => {
   if (!isOpen) return null;
 
@@ -42,7 +52,26 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
           Đơn hàng <span className="font-semibold text-[#1c1c19]">#{orderNumber}</span> đã được chuyển đến bộ phận đóng gói theo tiêu chuẩn phòng sạch Zurich.
         </p>
 
-        <div className="bg-[#fcf9f4] rounded-2xl p-4 mt-5 text-left border border-[#ebe8e3] text-xs space-y-2">
+        {/* Shipping address info */}
+        {(shippingAddress || recipientName) && (
+          <div className="bg-[#fcf9f4] rounded-2xl p-3.5 mt-4 text-left border border-[#ebe8e3] text-xs text-[#46464a] space-y-1">
+            <div className="flex items-center space-x-1.5 font-medium text-[#1c1c19]">
+              <MapPin className="w-3.5 h-3.5 text-[#74584d]" />
+              <span>Giao đến địa chỉ:</span>
+            </div>
+            <div className="pl-5 space-y-0.5">
+              <p className="font-medium text-[#1c1c19] text-[11px]">
+                {recipientName || 'Phương Anh'} {phone ? `• ${phone}` : ''}
+              </p>
+              <p className="text-[#77767b] text-[11px] leading-relaxed">
+                {shippingAddress ||
+                  'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'}
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div className="bg-[#fcf9f4] rounded-2xl p-4 mt-3 text-left border border-[#ebe8e3] text-xs space-y-2">
           <div className="flex items-center space-x-2 text-[#74584d] font-medium">
             <Sparkles className="w-4 h-4" />
             <span>Đặc quyền gửi kèm đơn hàng:</span>
@@ -54,12 +83,47 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
           </ul>
         </div>
 
-        <button
-          onClick={onClose}
-          className="w-full mt-6 py-3 bg-[#202022] hover:bg-black text-white text-xs font-semibold tracking-wider rounded-full shadow-md transition-all active:scale-98"
-        >
-          TIẾP TỤC TRẢI NGHIỆM
-        </button>
+        <div className="mt-6 space-y-2">
+          {onViewOrders && (
+            <button
+              onClick={() => {
+                onClose();
+                onViewOrders();
+              }}
+              className="w-full py-3 bg-[#202022] hover:bg-black text-white text-xs font-semibold tracking-wider rounded-full shadow-md transition-all active:scale-98 flex items-center justify-center space-x-2"
+            >
+              <Package className="w-4 h-4" />
+              <span>XEM DANH MỤC ĐÃ MUA</span>
+            </button>
+          )}
+
+          <button
+            onClick={onClose}
+            className={`w-full py-2.5 text-xs font-semibold tracking-wider rounded-full transition-all active:scale-98 ${
+              onViewOrders
+                ? 'bg-[#f6f3ee] hover:bg-[#f0ede9] text-[#1c1c19]'
+                : 'bg-[#202022] hover:bg-black text-white shadow-md'
+            }`}
+          >
+            TIẾP TỤC MUA SẮM
+          </button>
+
+          {onOpenSupport && (
+            <div className="pt-2 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenSupport();
+                }}
+                className="inline-flex items-center space-x-1.5 text-xs text-[#74584d] hover:text-[#1c1c19] font-medium transition-colors"
+              >
+                <Headphones className="w-3.5 h-3.5 text-[#74584d]" />
+                <span>Cần đổi địa chỉ gấp hoặc hỗ trợ đơn hàng? Liên hệ CSKH 24/7</span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

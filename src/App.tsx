@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PRODUCTS } from './data/products';
-import { Product, CartItem, ActiveTab, ViewMode } from './types';
+import { INITIAL_ORDERS } from './data/initialOrders';
+import { Product, CartItem, ActiveTab, ViewMode, Order, UserProfile } from './types';
 import { Header } from './components/Header';
 import { HeroBanner } from './components/HeroBanner';
 import { RitualCallout } from './components/RitualCallout';
@@ -13,6 +14,8 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { RitualModal } from './components/RitualModal';
 import { CheckoutSuccessModal } from './components/CheckoutSuccessModal';
 import { AccountDrawer } from './components/AccountDrawer';
+import { CustomerSupportModal } from './components/CustomerSupportModal';
+import { SupportFloatingButton } from './components/SupportFloatingButton';
 import { Footer } from './components/Footer';
 import { Smartphone, Monitor, Sparkles, Check } from 'lucide-react';
 
@@ -29,11 +32,11 @@ export default function App() {
   // Cart State (initialize with 2 items to match the '2' badge in user screenshot Image 1)
   const [cart, setCart] = useState<CartItem[]>([
     {
-      product: PRODUCTS[0], // GLANZ Radiance Glow Serum
+      product: PRODUCTS[2], // GLANZ Radiance Glow Serum
       quantity: 1,
     },
     {
-      product: PRODUCTS[1], // GLANZ Regenerating Face Cream
+      product: PRODUCTS[3], // GLANZ Regenerating Face Cream
       quantity: 1,
     },
   ]);
@@ -43,13 +46,69 @@ export default function App() {
     new Set(['serum-radiance', 'cream-regenerating'])
   );
 
+  // Dynamic User Profile State (Logged In / Logged Out)
+  const [user, setUser] = useState<UserProfile | null>(() => {
+    try {
+      const saved = localStorage.getItem('glanz_user_profile');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return {
+      name: 'Phương Anh',
+      email: 'vophuonganh054@gmail.com',
+      phone: '0908 123 489',
+      address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
+      tier: 'Hội Viên GLANZ Pure Privileges',
+      points: 1250,
+      avatarInitials: 'PA',
+      isLoggedIn: true,
+    };
+  });
+
+  // Dynamic Order History State (Danh mục đã mua)
+  const [orders, setOrders] = useState<Order[]>(() => {
+    try {
+      const saved = localStorage.getItem('glanz_purchased_orders');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_ORDERS;
+  });
+
+  // Persist User and Orders
+  useEffect(() => {
+    try {
+      if (user) {
+        localStorage.setItem('glanz_user_profile', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('glanz_user_profile');
+      }
+    } catch {}
+  }, [user]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('glanz_purchased_orders', JSON.stringify(orders));
+    } catch {}
+  }, [orders]);
+
   // Modals and Drawers
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isRitualModalOpen, setIsRitualModalOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [accountInitialTab, setAccountInitialTab] = useState<'orders' | 'profile'>('orders');
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isCheckoutSuccessOpen, setIsCheckoutSuccessOpen] = useState(false);
+  const [latestOrderNumber, setLatestOrderNumber] = useState('GLZ-89421');
+  const [latestRecipient, setLatestRecipient] = useState<{
+    name: string;
+    phone: string;
+    address: string;
+  }>({
+    name: 'Phương Anh',
+    phone: '0908 123 489',
+    address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
+  });
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Toast notification helper
@@ -58,6 +117,90 @@ export default function App() {
     setTimeout(() => {
       setToastMessage(null);
     }, 2800);
+  };
+
+  // User Actions: Login, Logout, Update Profile
+  const handleLogin = (name: string, email: string) => {
+    const initials = name
+      .trim()
+      .split(' ')
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join('')
+      .slice(-2)
+      .toUpperCase() || 'GA';
+
+    const updatedUser: UserProfile = {
+      name,
+      email,
+      phone: '0908 123 489',
+      address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
+      tier: 'Hội Viên GLANZ Pure Privileges',
+      points: 1250,
+      avatarInitials: initials,
+      isLoggedIn: true,
+    };
+    setUser(updatedUser);
+    setLatestRecipient({
+      name,
+      phone: '0908 123 489',
+      address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
+    });
+    showToast(`Đăng nhập thành công! Chào mừng ${name}`);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    showToast('Đã đăng xuất tài khoản thành công');
+  };
+
+  const handleUpdateProfile = (updated: { name: string; phone: string; address: string }) => {
+    setUser((prev) => {
+      const initials = updated.name
+        .trim()
+        .split(' ')
+        .filter(Boolean)
+        .map((part) => part[0])
+        .join('')
+        .slice(-2)
+        .toUpperCase() || (prev ? prev.avatarInitials : 'PA');
+
+      return {
+        ...(prev || {
+          email: 'vophuonganh054@gmail.com',
+          tier: 'Hội Viên GLANZ Pure Privileges',
+          points: 1250,
+          isLoggedIn: true,
+        }),
+        name: updated.name,
+        phone: updated.phone,
+        address: updated.address,
+        avatarInitials: initials,
+      };
+    });
+    setLatestRecipient({
+      name: updated.name,
+      phone: updated.phone,
+      address: updated.address,
+    });
+    showToast('Đã lưu thông tin người nhận và địa chỉ giao hàng!');
+  };
+
+  const handleUpdateOrderAddress = (orderId: string, newAddress: string, newPhone?: string, newName?: string) => {
+    setOrders((prev) =>
+      prev.map((order) => {
+        if (order.id === orderId) {
+          return {
+            ...order,
+            shippingAddress: newAddress,
+            ...(newPhone ? { phone: newPhone } : {}),
+            ...(newName ? { buyerName: newName } : {}),
+          };
+        }
+        return order;
+      })
+    );
+    showToast('Đã cập nhật thông tin giao hàng cho đơn hàng thành công!');
   };
 
   // Cart Actions
@@ -108,10 +251,73 @@ export default function App() {
       });
     });
     setIsCartOpen(true);
-    showToast('Đã thêm trọn bộ Nghi thức 4 bước vào giỏ hàng!');
+    showToast('Đã thêm trọn bộ Nghi thức 5 bước vào giỏ hàng!');
   };
 
-  const handleCheckoutSuccess = () => {
+  // Re-order past purchased order
+  const handleReorder = (order: Order) => {
+    order.items.forEach((item) => {
+      handleAddToCart(item.product, item.quantity);
+    });
+    setIsAccountOpen(false);
+    setIsCartOpen(true);
+    showToast(`Đã thêm ${order.items.length} sản phẩm từ đơn #${order.orderNumber} vào giỏ hàng`);
+  };
+
+  // Checkout and place order dynamically
+  const handleCheckoutSuccess = (recipientInfo?: { buyerName: string; phone: string; address: string }) => {
+    if (cart.length === 0) return;
+
+    const buyerName = recipientInfo?.buyerName || user?.name || 'Phương Anh';
+    const phone = recipientInfo?.phone || user?.phone || '0908 123 489';
+    const shippingAddress =
+      recipientInfo?.address ||
+      user?.address ||
+      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh';
+
+    setLatestRecipient({
+      name: buyerName,
+      phone,
+      address: shippingAddress,
+    });
+
+    const newOrderNum = `GLZ-${Math.floor(100000 + Math.random() * 900000)}`;
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0
+    );
+    const finalAmount = subtotal >= 500000 ? subtotal : subtotal + 30000;
+
+    const now = new Date();
+    const formattedDate = `${now.getHours().toString().padStart(2, '0')}:${now
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')} • ${now.getDate().toString().padStart(2, '0')}/${(
+      now.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, '0')}/${now.getFullYear()}`;
+
+    const newOrder: Order = {
+      id: `ord-${Date.now()}`,
+      orderNumber: newOrderNum,
+      createdAt: formattedDate,
+      status: 'processing',
+      statusLabel: 'Đang chuẩn bị hàng',
+      totalAmount: finalAmount,
+      buyerName,
+      phone,
+      shippingAddress,
+      paymentMethod: 'Thanh toán khi nhận hàng (COD)',
+      items: cart.map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+      })),
+    };
+
+    setOrders((prev) => [newOrder, ...prev]);
+    setLatestOrderNumber(newOrderNum);
     setCart([]);
     setIsCartOpen(false);
     setIsCheckoutSuccessOpen(true);
@@ -141,10 +347,16 @@ export default function App() {
     } else if (tab === 'wishlist') {
       setIsWishlistOpen(true);
     } else if (tab === 'account') {
+      setAccountInitialTab('orders');
       setIsAccountOpen(true);
     } else if (tab === 'routine') {
       setIsRitualModalOpen(true);
     }
+  };
+
+  const handleOpenPurchasedCategory = () => {
+    setAccountInitialTab('orders');
+    setIsAccountOpen(true);
   };
 
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -230,6 +442,9 @@ export default function App() {
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
                 isMobileFrame={true}
+                user={user}
+                onOpenAccount={handleOpenPurchasedCategory}
+                onOpenSupport={() => setIsSupportOpen(true)}
               />
 
               <HeroBanner
@@ -259,8 +474,17 @@ export default function App() {
 
               <BrandPhilosophy isMobileFrame={true} />
 
-              <Footer isMobileFrame={true} />
+              <Footer
+                isMobileFrame={true}
+                onOpenSupport={() => setIsSupportOpen(true)}
+              />
             </div>
+
+            {/* Floating CSKH button inside simulated mobile frame */}
+            <SupportFloatingButton
+              onOpenSupport={() => setIsSupportOpen(true)}
+              isMobileFrame={true}
+            />
 
             {/* Bottom Nav inside Phone Frame */}
             <div className="absolute bottom-0 left-0 right-0 z-40">
@@ -289,6 +513,9 @@ export default function App() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             isMobileFrame={false}
+            user={user}
+            onOpenAccount={handleOpenPurchasedCategory}
+            onOpenSupport={() => setIsSupportOpen(true)}
           />
 
           <main className="flex-grow pb-16 sm:pb-0">
@@ -320,7 +547,16 @@ export default function App() {
             <BrandPhilosophy isMobileFrame={false} />
           </main>
 
-          <Footer isMobileFrame={false} />
+          <Footer
+            isMobileFrame={false}
+            onOpenSupport={() => setIsSupportOpen(true)}
+          />
+
+          {/* Floating CSKH 24/7 button on desktop / tablet / mobile web */}
+          <SupportFloatingButton
+            onOpenSupport={() => setIsSupportOpen(true)}
+            isMobileFrame={false}
+          />
 
           {/* Bottom Nav appears on small screens when in responsive mode */}
           <div className="block sm:hidden">
@@ -349,9 +585,12 @@ export default function App() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         items={cart}
+        user={user}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
         onCheckoutSuccess={handleCheckoutSuccess}
+        onUpdateProfile={handleUpdateProfile}
+        onOpenSupport={() => setIsSupportOpen(true)}
       />
 
       {/* Wishlist Drawer */}
@@ -372,17 +611,40 @@ export default function App() {
         onAddFullSetToCart={handleAddFullSetToCart}
       />
 
-      {/* Account Profile Drawer */}
+      {/* Account Profile Drawer with Dynamic Login/Logout & Purchased Orders */}
       <AccountDrawer
         isOpen={isAccountOpen}
         onClose={() => setIsAccountOpen(false)}
+        user={user}
+        orders={orders}
+        onLogin={handleLogin}
+        onLogout={handleLogout}
+        onUpdateProfile={handleUpdateProfile}
+        onUpdateOrderAddress={handleUpdateOrderAddress}
+        onSelectProduct={setSelectedProduct}
+        onReorder={handleReorder}
+        onOpenSupport={() => setIsSupportOpen(true)}
+        initialTab={accountInitialTab}
       />
 
       {/* Order Confirmation Modal */}
       <CheckoutSuccessModal
         isOpen={isCheckoutSuccessOpen}
         onClose={() => setIsCheckoutSuccessOpen(false)}
-        orderNumber="GLANZ-89421"
+        orderNumber={latestOrderNumber}
+        recipientName={latestRecipient.name}
+        phone={latestRecipient.phone}
+        shippingAddress={latestRecipient.address}
+        onViewOrders={handleOpenPurchasedCategory}
+        onOpenSupport={() => setIsSupportOpen(true)}
+      />
+
+      {/* Customer Support Center Modal (CSKH 24/7) */}
+      <CustomerSupportModal
+        isOpen={isSupportOpen}
+        onClose={() => setIsSupportOpen(false)}
+        user={user}
+        onShowToast={showToast}
       />
 
       {/* Floating Toast Notification */}

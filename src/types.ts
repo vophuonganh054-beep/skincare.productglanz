@@ -34,3 +34,34 @@ export interface CartItem {
 
 export type ActiveTab = 'home' | 'catalog' | 'wishlist' | 'cart' | 'account' | 'routine';
 export type ViewMode = 'desktop' | 'mobile' | 'responsive';
+
+export interface OrderItem {
+  product: Product;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  createdAt: string;
+  items: OrderItem[];
+  totalAmount: number;
+  status: 'processing' | 'shipping' | 'delivered' | 'completed';
+  statusLabel: string;
+  buyerName?: string;
+  phone?: string;
+  shippingAddress?: string;
+  paymentMethod?: string;
+}
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  tier: string;
+  points: number;
+  avatarInitials: string;
+  isLoggedIn: boolean;
+}

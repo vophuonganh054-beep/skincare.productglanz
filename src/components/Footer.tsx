@@ -1,11 +1,12 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Award, HeartHandshake } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail, MapPin } from 'lucide-react';
 
 interface FooterProps {
   isMobileFrame?: boolean;
+  onOpenSupport?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false }) => {
+export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSupport }) => {
   return (
     <footer className={`bg-[#202022] text-[#fcf9f4] border-t border-[#31302d] ${isMobileFrame ? 'pb-24 pt-8 px-4' : 'pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6'}`}>
       <div className={`${isMobileFrame ? 'w-full' : 'max-w-7xl mx-auto'}`}>
@@ -22,6 +23,10 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false }) => {
             <p className="text-xs text-[#c7c6ca] font-light leading-relaxed">
               Thương hiệu dược mỹ phẩm thuần chay tiên phong chưng cất tại Zurich, Thụy Sĩ. Đánh thức vẻ rạng ngời thuần khiết của làn da.
             </p>
+            <div className="pt-2 text-[11px] text-[#898789] space-y-1">
+              <p>🇨🇭 Zurich: Bahnhofstrasse 45, 8001</p>
+              <p>🇻🇳 TP.HCM: Tầng 1, Landmark 81, P. 22, Bình Thạnh</p>
+            </div>
           </div>
 
           {/* Quick links */}
@@ -38,17 +43,45 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false }) => {
             </ul>
           </div>
 
-          {/* Care & Ethics */}
+          {/* Customer Care & Support */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold tracking-widest text-[#fed8c9] uppercase">
-              CAM KẾT THỤY SĨ
+            <h4 className="text-xs font-semibold tracking-widest text-[#fed8c9] uppercase flex items-center space-x-1.5">
+              <Headphones className="w-3.5 h-3.5 text-[#fed8c9]" />
+              <span>CHĂM SÓC KHÁCH HÀNG</span>
             </h4>
             <ul className="space-y-2 text-xs text-[#c7c6ca]">
-              <li className="hover:text-white cursor-pointer transition-colors">100% Thuần Chay (Vegan Certified)</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Kiểm nghiệm chuẩn Viện Da Liễu Zurich</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Không cồn khô, paraben & hương liệu</li>
-              <li className="hover:text-white cursor-pointer transition-colors">Đổi trả miễn phí 30 ngày</li>
+              <li className="flex items-center space-x-2">
+                <span className="text-[#fed8c9]">Hotline 24/7:</span>
+                <a href="tel:19008899" className="text-white font-bold hover:text-[#fed8c9] transition-colors">
+                  1900 8899 (Miễn cước)
+                </a>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="text-[#fed8c9]">Bác sĩ VIP:</span>
+                <a href="tel:0908123489" className="text-white hover:text-[#fed8c9] transition-colors">
+                  0908 123 489
+                </a>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="text-[#fed8c9]">Email CSKH:</span>
+                <a href="mailto:cskh@glanz.vn" className="hover:text-white transition-colors">
+                  cskh@glanz.vn
+                </a>
+              </li>
+              <li className="hover:text-white cursor-pointer transition-colors">Đổi trả & Hoàn tiền miễn phí 30 ngày</li>
             </ul>
+
+            {onOpenSupport && (
+              <div className="pt-2">
+                <button
+                  onClick={onOpenSupport}
+                  className="w-full py-2 px-3 bg-white/10 hover:bg-white/20 text-[#fed8c9] hover:text-white text-xs font-semibold rounded-full border border-white/15 transition-colors flex items-center justify-center space-x-1.5"
+                >
+                  <Headphones className="w-3.5 h-3.5" />
+                  <span>MỞ TRUNG TÂM CSKH</span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Newsletter */}
@@ -72,18 +105,32 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false }) => {
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
+            <div className="text-[10px] text-[#898789] pt-1">
+              Phục vụ từ 8:00 đến 22:00 hàng ngày (kể cả Lễ, Tết).
+            </div>
           </div>
         </div>
 
         {/* Bottom copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#898789] gap-3 text-center sm:text-left">
           <p>© 2025 GLANZ Pure Essence. All rights reserved.</p>
-          <div className="flex items-center space-x-4 text-[11px]">
+          <div className="flex flex-wrap items-center justify-center space-x-3 text-[11px]">
             <span className="hover:text-white cursor-pointer">Bảo mật</span>
             <span>•</span>
             <span className="hover:text-white cursor-pointer">Điều khoản</span>
             <span>•</span>
-            <span className="hover:text-white cursor-pointer">Liên hệ: contact@glanz-skincare.ch</span>
+            {onOpenSupport ? (
+              <button
+                onClick={onOpenSupport}
+                className="hover:text-[#fed8c9] text-[#c7c6ca] underline underline-offset-2 transition-colors"
+              >
+                Hỗ trợ & CSKH 24/7
+              </button>
+            ) : (
+              <span className="hover:text-white cursor-pointer">Hotline: 1900 8899</span>
+            )}
+            <span>•</span>
+            <span className="hover:text-white cursor-pointer">cskh@glanz.vn</span>
           </div>
         </div>
       </div>
