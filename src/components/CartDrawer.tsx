@@ -10,6 +10,7 @@ interface CartDrawerProps {
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
   onCheckoutSuccess: (recipientInfo?: { buyerName: string; phone: string; address: string }) => void;
+  onOpenCheckout?: () => void;
   onUpdateProfile?: (updated: { name: string; phone: string; address: string }) => void;
   onOpenSupport?: () => void;
 }
@@ -22,6 +23,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onUpdateQuantity,
   onRemoveItem,
   onCheckoutSuccess,
+  onOpenCheckout,
   onUpdateProfile,
   onOpenSupport,
 }) => {
@@ -87,11 +89,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       });
     }
 
-    onCheckoutSuccess({
-      buyerName: finalBuyer,
-      phone: finalPhone,
-      address: finalAddress,
-    });
+    if (onOpenCheckout) {
+      onClose();
+      onOpenCheckout();
+    } else {
+      onCheckoutSuccess({
+        buyerName: finalBuyer,
+        phone: finalPhone,
+        address: finalAddress,
+      });
+    }
   };
 
   return (

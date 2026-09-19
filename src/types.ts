@@ -32,8 +32,21 @@ export interface CartItem {
   selectedSize?: string;
 }
 
-export type ActiveTab = 'home' | 'catalog' | 'wishlist' | 'cart' | 'account' | 'routine';
+export type ActiveTab = 'home' | 'catalog' | 'wishlist' | 'cart' | 'account' | 'routine' | 'policies';
 export type ViewMode = 'desktop' | 'mobile' | 'responsive';
+
+export type PaymentMethodType = 'cod' | 'vietqr' | 'bank_transfer';
+
+export interface ShippingCarrier {
+  id: 'ghtk' | 'ghn' | 'express' | 'viettel';
+  name: string;
+  fullName: string;
+  estimatedTime: string;
+  price: number;
+  freeThreshold?: number;
+  badge?: string;
+  description: string;
+}
 
 export interface OrderItem {
   product: Product;
@@ -53,6 +66,11 @@ export interface Order {
   phone?: string;
   shippingAddress?: string;
   paymentMethod?: string;
+  paymentMethodType?: PaymentMethodType;
+  shippingCarrier?: string;
+  shippingFee?: number;
+  discountAmount?: number;
+  note?: string;
 }
 
 export interface UserProfile {

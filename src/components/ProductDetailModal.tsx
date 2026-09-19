@@ -6,6 +6,7 @@ interface ProductDetailModalProps {
   product: Product | null;
   onClose: () => void;
   onAddToCart: (product: Product, quantity: number) => void;
+  onBuyNow?: (product: Product, quantity: number) => void;
   onToggleWishlist: (product: Product) => void;
   isWishlisted: boolean;
 }
@@ -14,6 +15,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
   onClose,
   onAddToCart,
+  onBuyNow,
   onToggleWishlist,
   isWishlisted,
 }) => {
@@ -217,14 +219,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </button>
 
                   <button
+                    id="modal-buy-now-btn"
                     onClick={() => {
-                      handleAdd();
+                      if (onBuyNow) {
+                        onBuyNow(product, quantity);
+                      } else {
+                        handleAdd();
+                      }
                       onClose();
                     }}
                     className="w-full py-3 px-4 rounded-full text-xs font-semibold tracking-wider bg-[#d8b4a6] hover:bg-[#c9a394] text-[#1c1c19] transition-all active:scale-98 shadow-sm flex items-center justify-center space-x-2"
                   >
                     <Sparkles className="w-4 h-4" />
-                    <span>MUA NGAY</span>
+                    <span>MUA NGAY (THANH TOÁN)</span>
                   </button>
                 </div>
               </div>

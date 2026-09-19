@@ -17,6 +17,7 @@ interface HeaderProps {
   user?: UserProfile | null;
   onOpenAccount?: () => void;
   onOpenSupport?: () => void;
+  onOpenPolicies?: (tab?: 'returns' | 'privacy' | 'shipping') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -34,6 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
   user,
   onOpenAccount,
   onOpenSupport,
+  onOpenPolicies,
 }) => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
@@ -138,6 +140,15 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                   <Headphones className="w-3.5 h-3.5" />
                   <span>CHĂM SÓC KHÁCH HÀNG</span>
+                </button>
+              )}
+              {onOpenPolicies && (
+                <button
+                  id="nav-policies-btn"
+                  onClick={() => onOpenPolicies('returns')}
+                  className="transition-colors hover:text-[#1c1c19]"
+                >
+                  CHÍNH SÁCH
                 </button>
               )}
             </nav>

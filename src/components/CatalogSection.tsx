@@ -7,6 +7,7 @@ interface CatalogSectionProps {
   products: Product[];
   onSelectProduct: (product: Product) => void;
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
+  onBuyNow?: (product: Product, e: React.MouseEvent) => void;
   onToggleWishlist: (product: Product, e: React.MouseEvent) => void;
   wishlistIds: Set<string>;
   searchQuery?: string;
@@ -17,15 +18,17 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
   products,
   onSelectProduct,
   onAddToCart,
+  onBuyNow,
   onToggleWishlist,
   wishlistIds,
   searchQuery = '',
   isMobileFrame = false,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating'>('featured');
 
   // Filter products by category and search query
-  const filteredProducts = products.filter((item) => {
+  let filteredProducts = products.filter((item) => {
     const matchesCat = selectedCategory === 'all' || item.category === selectedCategory;
     const matchesSearch =
       searchQuery === '' ||
@@ -35,16 +38,47 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
     return matchesCat && matchesSearch;
   });
 
+  // Sort products
+  filteredProducts = [...filteredProducts].sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
+    if (sortBy === 'rating') return b.rating - a.rating;
+    return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
+  });
+
   return (
     <section className={`w-full ${isMobileFrame ? 'px-3 pt-5' : 'max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12'}`}>
-      {/* Title & Count (exactly as seen in Image 1: "Danh Mục Sản Phẩm" / "4 SẢN PHẨM") */}
-      <div className="flex items-baseline justify-between mb-3 sm:mb-4">
-        <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-normal text-[#1c1c19] tracking-tight">
-          Danh Mục Sản Phẩm
-        </h2>
-        <span className="text-[11px] sm:text-xs font-semibold tracking-wider text-[#77767b] uppercase">
-          {filteredProducts.length} SẢN PHẨM
-        </span>
+      {/* Title & Count & Sort */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-3 sm:mb-4">
+        <div>
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-normal text-[#1c1c19] tracking-tight">
+            Danh Mục Sản Phẩm
+          </h2>
+          <p className="text-[11px] sm:text-xs text-[#77767b] font-light">
+            Dược mỹ phẩm thuần chay tế bào gốc sông băng Thụy Sĩ
+          </p>
+        </div>
+
+        <div className="flex items-center space-x-3 text-xs">
+          <span className="text-[11px] font-semibold tracking-wider text-[#77767b] uppercase whitespace-nowrap">
+            {filteredProducts.length} SẢN PHẨM
+          </span>
+          <span className="text-[#c7c6ca]">|</span>
+          <div className="flex items-center space-x-1 text-[11px] text-[#46464a]">
+            <span className="text-[#77767b] hidden sm:inline">Sắp xếp:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              aria-label="Sắp xếp danh mục sản phẩm"
+              className="bg-transparent border border-[#202022]/10 rounded-lg px-2 py-1 text-xs text-[#1c1c19] focus:outline-none cursor-pointer"
+            >
+              <option value="featured">Nổi bật nhất</option>
+              <option value="price-asc">Giá: Thấp đến Cao</option>
+              <option value="price-desc">Giá: Cao đến Thấp</option>
+              <option value="rating">Đánh giá cao nhất</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       {/* Category Pills (horizontally scrollable on mobile as in screenshot) */}
@@ -83,6 +117,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
               product={product}
               onSelect={onSelectProduct}
               onAddToCart={onAddToCart}
+              onBuyNow={onBuyNow}
               onToggleWishlist={onToggleWishlist}
               isWishlisted={wishlistIds.has(product.id)}
             />

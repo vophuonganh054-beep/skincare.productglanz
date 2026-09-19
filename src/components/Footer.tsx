@@ -4,9 +4,10 @@ import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail
 interface FooterProps {
   isMobileFrame?: boolean;
   onOpenSupport?: () => void;
+  onOpenPolicies?: (tab: 'returns' | 'privacy' | 'shipping') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSupport }) => {
+export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSupport, onOpenPolicies }) => {
   return (
     <footer className={`bg-[#202022] text-[#fcf9f4] border-t border-[#31302d] ${isMobileFrame ? 'pb-24 pt-8 px-4' : 'pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6'}`}>
       <div className={`${isMobileFrame ? 'w-full' : 'max-w-7xl mx-auto'}`}>
@@ -68,7 +69,20 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
                   cskh@glanz.vn
                 </a>
               </li>
-              <li className="hover:text-white cursor-pointer transition-colors">Đổi trả & Hoàn tiền miễn phí 30 ngày</li>
+              <li
+                onClick={() => onOpenPolicies ? onOpenPolicies('returns') : undefined}
+                className="hover:text-white cursor-pointer transition-colors flex items-center space-x-1"
+              >
+                <span>Đổi trả & Hoàn tiền 30 ngày</span>
+                <span className="text-[10px] text-[#fed8c9]">↗</span>
+              </li>
+              <li
+                onClick={() => onOpenPolicies ? onOpenPolicies('shipping') : undefined}
+                className="hover:text-white cursor-pointer transition-colors flex items-center space-x-1"
+              >
+                <span>Chính sách giao nhận & đồng kiểm</span>
+                <span className="text-[10px] text-[#fed8c9]">↗</span>
+              </li>
             </ul>
 
             {onOpenSupport && (
@@ -115,9 +129,26 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#898789] gap-3 text-center sm:text-left">
           <p>© 2025 GLANZ Pure Essence. All rights reserved.</p>
           <div className="flex flex-wrap items-center justify-center space-x-3 text-[11px]">
-            <span className="hover:text-white cursor-pointer">Bảo mật</span>
+            <button
+              onClick={() => onOpenPolicies ? onOpenPolicies('privacy') : undefined}
+              className="hover:text-white transition-colors"
+            >
+              Chính sách bảo mật
+            </button>
             <span>•</span>
-            <span className="hover:text-white cursor-pointer">Điều khoản</span>
+            <button
+              onClick={() => onOpenPolicies ? onOpenPolicies('returns') : undefined}
+              className="hover:text-white transition-colors"
+            >
+              Đổi trả & Hoàn tiền
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => onOpenPolicies ? onOpenPolicies('shipping') : undefined}
+              className="hover:text-white transition-colors"
+            >
+              Vận chuyển
+            </button>
             <span>•</span>
             {onOpenSupport ? (
               <button

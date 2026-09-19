@@ -16,6 +16,8 @@ import { CheckoutSuccessModal } from './components/CheckoutSuccessModal';
 import { AccountDrawer } from './components/AccountDrawer';
 import { CustomerSupportModal } from './components/CustomerSupportModal';
 import { SupportFloatingButton } from './components/SupportFloatingButton';
+import { CheckoutModal } from './components/CheckoutModal';
+import { PoliciesModal, PolicyTabType } from './components/PoliciesModal';
 import { Footer } from './components/Footer';
 import { Smartphone, Monitor, Sparkles, Check } from 'lucide-react';
 
@@ -98,6 +100,10 @@ export default function App() {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [accountInitialTab, setAccountInitialTab] = useState<'orders' | 'profile'>('orders');
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
+  const [isPoliciesOpen, setIsPoliciesOpen] = useState(false);
+  const [policiesInitialTab, setPoliciesInitialTab] = useState<PolicyTabType>('returns');
   const [isCheckoutSuccessOpen, setIsCheckoutSuccessOpen] = useState(false);
   const [latestOrderNumber, setLatestOrderNumber] = useState('GLZ-89421');
   const [latestRecipient, setLatestRecipient] = useState<{
@@ -264,7 +270,57 @@ export default function App() {
     showToast(`Đã thêm ${order.items.length} sản phẩm từ đơn #${order.orderNumber} vào giỏ hàng`);
   };
 
-  // Checkout and place order dynamically
+  // BUY NOW Action: Immediately launches checkout modal with this product
+  const handleBuyNow = (product: Product, quantity = 1, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCheckoutItems([{ product, quantity }]);
+    setIsCheckoutOpen(true);
+    showToast(`Chuyển đến thanh toán: ${product.name}`);
+  };
+
+  // Open checkout from cart
+  const handleOpenCheckoutFromCart = () => {
+    if (cart.length === 0) {
+      showToast('Giỏ hàng của bạn đang trống.');
+      return;
+    }
+    setCheckoutItems(cart);
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  // Open Policies Modal
+  const handleOpenPolicies = (tab: PolicyTabType = 'returns') => {
+    setPoliciesInitialTab(tab);
+    setIsPoliciesOpen(true);
+  };
+
+  // Checkout and place order dynamically from CheckoutModal
+  const handleCompleteOrder = (order: Order) => {
+    setOrders((prev) => [order, ...prev]);
+    setLatestOrderNumber(order.orderNumber);
+    setLatestRecipient({
+      name: order.buyerName,
+      phone: order.phone,
+      address: order.shippingAddress,
+    });
+
+    // If order was placed from entire cart, clear the cart
+    const isFromCart =
+      cart.length > 0 &&
+      checkoutItems.length === cart.length &&
+      checkoutItems.every((item, idx) => item.product.id === cart[idx]?.product.id);
+
+    if (isFromCart) {
+      setCart([]);
+    }
+
+    setIsCheckoutOpen(false);
+    setIsCheckoutSuccessOpen(true);
+    showToast(`Đặt hàng #${order.orderNumber} thành công!`);
+  };
+
+  // Checkout and place order dynamically (fallback from drawer)
   const handleCheckoutSuccess = (recipientInfo?: { buyerName: string; phone: string; address: string }) => {
     if (cart.length === 0) return;
 
@@ -445,6 +501,7 @@ export default function App() {
                 user={user}
                 onOpenAccount={handleOpenPurchasedCategory}
                 onOpenSupport={() => setIsSupportOpen(true)}
+                onOpenPolicies={handleOpenPolicies}
               />
 
               <HeroBanner
@@ -465,6 +522,7 @@ export default function App() {
                   products={PRODUCTS}
                   onSelectProduct={setSelectedProduct}
                   onAddToCart={(p, e) => handleAddToCart(p, 1, e)}
+                  onBuyNow={(p, e) => handleBuyNow(p, 1, e)}
                   onToggleWishlist={handleToggleWishlist}
                   wishlistIds={wishlistIds}
                   searchQuery={searchQuery}
@@ -477,6 +535,7 @@ export default function App() {
               <Footer
                 isMobileFrame={true}
                 onOpenSupport={() => setIsSupportOpen(true)}
+                onOpenPolicies={handleOpenPolicies}
               />
             </div>
 
@@ -516,6 +575,7 @@ export default function App() {
             user={user}
             onOpenAccount={handleOpenPurchasedCategory}
             onOpenSupport={() => setIsSupportOpen(true)}
+            onOpenPolicies={handleOpenPolicies}
           />
 
           <main className="flex-grow pb-16 sm:pb-0">
@@ -537,6 +597,7 @@ export default function App() {
                 products={PRODUCTS}
                 onSelectProduct={setSelectedProduct}
                 onAddToCart={(p, e) => handleAddToCart(p, 1, e)}
+                onBuyNow={(p, e) => handleBuyNow(p, 1, e)}
                 onToggleWishlist={handleToggleWishlist}
                 wishlistIds={wishlistIds}
                 searchQuery={searchQuery}
@@ -550,6 +611,7 @@ export default function App() {
           <Footer
             isMobileFrame={false}
             onOpenSupport={() => setIsSupportOpen(true)}
+            onOpenPolicies={handleOpenPolicies}
           />
 
           {/* Floating CSKH 24/7 button on desktop / tablet / mobile web */}
@@ -576,6 +638,7 @@ export default function App() {
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={(p, qty) => handleAddToCart(p, qty)}
+        onBuyNow={(p, qty) => handleBuyNow(p, qty)}
         onToggleWishlist={handleToggleWishlist}
         isWishlisted={selectedProduct ? wishlistIds.has(selectedProduct.id) : false}
       />
@@ -589,7 +652,27 @@ export default function App() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
         onCheckoutSuccess={handleCheckoutSuccess}
+        onOpenCheckout={handleOpenCheckoutFromCart}
         onUpdateProfile={handleUpdateProfile}
+        onOpenSupport={() => setIsSupportOpen(true)}
+      />
+
+      {/* Full Checkout & Payment Modal (COD, VietQR, Bank Transfer) */}
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        items={checkoutItems}
+        user={user}
+        onCompleteOrder={handleCompleteOrder}
+        onShowToast={showToast}
+        onOpenPolicies={handleOpenPolicies}
+      />
+
+      {/* Policies Modal (Đổi trả, Bảo mật, Vận chuyển) */}
+      <PoliciesModal
+        isOpen={isPoliciesOpen}
+        onClose={() => setIsPoliciesOpen(false)}
+        initialTab={policiesInitialTab}
         onOpenSupport={() => setIsSupportOpen(true)}
       />
 

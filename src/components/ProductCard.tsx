@@ -6,6 +6,7 @@ interface ProductCardProps {
   product: Product;
   onSelect: (product: Product) => void;
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
+  onBuyNow?: (product: Product, e: React.MouseEvent) => void;
   onToggleWishlist: (product: Product, e: React.MouseEvent) => void;
   isWishlisted: boolean;
 }
@@ -14,6 +15,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onSelect,
   onAddToCart,
+  onBuyNow,
   onToggleWishlist,
   isWishlisted,
 }) => {
@@ -92,9 +94,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Bottom Pricing & Cart Action */}
-        <div className="mt-2.5 sm:mt-3 pt-2 border-t border-[#202022]/5 flex items-end justify-between">
-          <div>
-            <div className="flex items-baseline space-x-1.5">
+        <div className="mt-2.5 sm:mt-3 pt-2 border-t border-[#202022]/5 flex items-center justify-between gap-1.5">
+          <div className="min-w-0 flex-grow">
+            <div className="flex items-baseline space-x-1.5 flex-wrap">
               <span className="font-serif text-sm sm:text-base font-semibold text-[#1c1c19]">
                 {product.price.toLocaleString('vi-VN')}₫
               </span>
@@ -105,21 +107,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </div>
             {product.note && (
-              <span className="block text-[10px] text-[#8a9a86] font-medium tracking-wide">
+              <span className="block text-[10px] text-[#8a9a86] font-medium tracking-wide truncate">
                 {product.note}
               </span>
             )}
           </div>
 
-          {/* Add to Cart button (circular black button from Image 1) */}
-          <button
-            id={`add-cart-btn-${product.id}`}
-            onClick={(e) => onAddToCart(product, e)}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#08080a] text-white flex items-center justify-center hover:bg-[#202022] hover:scale-105 active:scale-95 transition-all shadow-xs shrink-0"
-            title="Thêm vào giỏ hàng"
-          >
-            <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.75]" />
-          </button>
+          {/* Action buttons: Mua ngay & Thêm vào giỏ */}
+          <div className="flex items-center space-x-1 sm:space-x-1.5 shrink-0">
+            {onBuyNow && (
+              <button
+                id={`buy-now-btn-${product.id}`}
+                onClick={(e) => onBuyNow(product, e)}
+                className="px-2.5 sm:px-3 py-1.5 rounded-full text-[10px] sm:text-[11px] font-semibold tracking-wider bg-[#d8b4a6] hover:bg-[#c9a394] text-[#1c1c19] active:scale-95 transition-all whitespace-nowrap shadow-xs"
+                title="Mua ngay (Chuyển sang thanh toán)"
+              >
+                MUA NGAY
+              </button>
+            )}
+
+            {/* Add to Cart button */}
+            <button
+              id={`add-cart-btn-${product.id}`}
+              onClick={(e) => onAddToCart(product, e)}
+              className="w-8 h-8 sm:w-8 sm:h-8 rounded-full bg-[#08080a] text-white flex items-center justify-center hover:bg-[#202022] hover:scale-105 active:scale-95 transition-all shadow-xs shrink-0"
+              title="Thêm vào giỏ hàng"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 stroke-[1.75]" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
