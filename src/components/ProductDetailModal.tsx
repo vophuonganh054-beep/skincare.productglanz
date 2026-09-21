@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, Star, ShoppingBag, Check, ShieldCheck, Sparkles, Droplets, RefreshCw } from 'lucide-react';
+import { X, Heart, ShoppingBag, Check, Sparkles, Droplets, RefreshCw } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductDetailModalProps {
@@ -20,7 +20,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   isWishlisted,
 }) => {
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<'benefits' | 'ingredients' | 'usage' | 'reviews'>('benefits');
+  const [activeTab, setActiveTab] = useState<'benefits' | 'ingredients' | 'usage'>('benefits');
   const [addedAnimation, setAddedAnimation] = useState(false);
 
   if (!product) return null;
@@ -108,7 +108,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {/* Brand & Volume */}
                 <div className="flex items-center justify-between">
                   <span className="text-xs uppercase tracking-[0.2em] text-[#74584d] font-semibold">
-                    GLANZ ZURICH • {product.capacity}
+                    ALPS ZURICH • {product.capacity}
                   </span>
                   <span className="text-xs text-[#8a9a86] font-medium bg-[#8a9a86]/10 px-2.5 py-0.5 rounded-full">
                     {product.inStock ? 'Còn hàng' : 'Hết hàng'}
@@ -125,22 +125,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {product.subtitle}
                 </p>
 
-                {/* Rating & Social Proof */}
-                <div className="flex items-center space-x-3 mt-2.5 text-xs text-[#46464a]">
-                  <div className="flex items-center text-[#d48b38]">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
-                    <span className="font-medium ml-1.5">{product.rating.toFixed(1)}</span>
-                  </div>
-                  <span className="text-[#c7c6ca]">|</span>
-                  <span>{product.reviewCount} đánh giá</span>
-                  <span className="text-[#c7c6ca]">|</span>
-                  <span>Đã bán {product.soldCount}</span>
-                </div>
-
                 {/* Pricing Box */}
-                <div className="mt-4 p-4 rounded-2xl bg-white border border-[#202022]/6 flex items-baseline justify-between">
+                <div className="mt-3.5 p-4 rounded-2xl bg-white border border-[#202022]/6 flex items-baseline justify-between">
                   <div>
                     <div className="flex items-baseline space-x-2">
                       <span className="font-serif text-2xl sm:text-3xl font-normal text-[#1c1c19]">
@@ -240,10 +226,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
           {/* Bottom Tabs: Detailed Skincare Information */}
           <div className="mt-8 pt-6 border-t border-[#202022]/8">
-            <div className="flex border-b border-[#202022]/10 space-x-4 sm:space-x-8 text-xs tracking-wider">
+            <div className="flex border-b border-[#202022]/10 space-x-3 sm:space-x-8 text-xs tracking-wider overflow-x-auto pb-1">
               <button
                 onClick={() => setActiveTab('benefits')}
-                className={`pb-2.5 font-medium transition-colors ${
+                className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'benefits'
                     ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
@@ -253,7 +239,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </button>
               <button
                 onClick={() => setActiveTab('ingredients')}
-                className={`pb-2.5 font-medium transition-colors ${
+                className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'ingredients'
                     ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
@@ -263,7 +249,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               </button>
               <button
                 onClick={() => setActiveTab('usage')}
-                className={`pb-2.5 font-medium transition-colors ${
+                className={`pb-2.5 font-medium transition-colors whitespace-nowrap ${
                   activeTab === 'usage'
                     ? 'border-b-2 border-[#1c1c19] text-[#1c1c19]'
                     : 'text-[#77767b] hover:text-[#1c1c19]'
@@ -313,7 +299,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </p>
                   <div className="pt-2 text-[11px] text-[#77767b] flex items-center space-x-2">
                     <Droplets className="w-4 h-4 text-[#74584d]" />
-                    <span>Nên kết hợp trọn bộ nghi thức 4 bước GLANZ để đạt hiệu quả dưỡng sáng tối đa sau 28 ngày.</span>
+                    <span>Nên kết hợp trọn bộ nghi thức 5 bước Alps Pure Essence để đạt hiệu quả dưỡng sáng tối đa sau 28 ngày.</span>
                   </div>
                 </div>
               )}

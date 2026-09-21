@@ -1,14 +1,14 @@
 import { Product } from '../types';
-import glowSerumImg from '../assets/images/glanz_glow_serum_1789750576194.jpg';
-import faceCreamImg from '../assets/images/face_cream_1789749786500.jpg';
-import botanicalTonerImg from '../assets/images/botanical_toner_1789749803910.jpg';
-import hydroMaskImg from '../assets/images/glanz_sheet_mask_1789750594501.jpg';
-import cleanserImg from '../assets/images/glanz_cleanser_1789750556370.jpg';
+import glowSerumImg from '../assets/images/alps_serum_champagne_1789839140054.jpg';
+import faceCreamImg from '../assets/images/alps_cream_champagne_1789839152375.jpg';
+import botanicalTonerImg from '../assets/images/alps_toner_champagne_1789839113008.jpg';
+import hydroMaskImg from '../assets/images/alps_mask_champagne_1789839165550.jpg';
+import cleanserImg from '../assets/images/alps_clean_champagne_1789839128537.jpg';
 
 export const PRODUCTS: Product[] = [
   {
     id: 'cleanser-gentle-purifying',
-    name: 'GLANZ Gentle Purifying Cleanser',
+    name: 'Alps Gentle Purifying Cleanser',
     shortName: 'Gentle Purifying Cleanser',
     capacity: '120ML • 4.0 FL. OZ',
     category: 'cleanser',
@@ -17,7 +17,7 @@ export const PRODUCTS: Product[] = [
     tagType: 'cleanser',
     subtitle: 'Purifying Foaming Wash - Bọt mịn dịu nhẹ, sạch sâu',
     description:
-      'Sữa rửa mặt tạo bọt dịu nhẹ GLANZ Gentle Purifying Cleanser (Purifying Foaming Wash) với lớp bọt bông micro-foam siêu mịn, giúp làm sạch sâu bụi mịn PM2.5, bã nhờn và cặn trang điểm mà vẫn duy trì độ ẩm tự nhiên, không gây cảm giác khô căng kin kít sau khi rửa.',
+      'Sữa rửa mặt tạo bọt dịu nhẹ Alps Gentle Purifying Cleanser (Purifying Foaming Wash) với lớp bọt bông micro-foam siêu mịn, giúp làm sạch sâu bụi mịn PM2.5, bã nhờn và cặn trang điểm mà vẫn duy trì độ ẩm tự nhiên, không gây cảm giác khô căng kin kít sau khi rửa.',
     rating: 4.9,
     reviewCount: 184,
     soldCount: '1.4k',
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
       'Làm sạch sâu bụi mịn và bã nhờn mà không phá vỡ màng ẩm sinh học',
       'Độ pH 5.5 cân bằng lý tưởng cho mọi loại da, kể cả da nhạy cảm',
       'Bọt mịn xốp như mây, giảm tối đa ma sát tổn thương bề mặt da',
-      'Thiết kế tuýp trắng nắp bật mạ vàng champagne sang trọng, chống tràn'
+      'Bảo toàn độ ẩm tự nhiên, không gây cảm giác khô căng sau khi rửa'
     ],
     usage: 'Lấy lượng cỡ hạt đậu ra lòng bàn tay ướt, xoa tạo bọt dày mịn. Massage nhẹ nhàng toàn mặt trong 60 giây và rửa sạch lại với nước ấm.',
     routineStepNumber: 1,
@@ -46,7 +46,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'toner-botanical',
-    name: 'GLANZ Botanical Balancing Toner',
+    name: 'Alps Botanical Balancing Toner',
     shortName: 'Botanical Balancing Toner',
     capacity: '100ML • 3.4 FL. OZ',
     category: 'toner',
@@ -55,7 +55,7 @@ export const PRODUCTS: Product[] = [
     tagType: 'hydrate',
     subtitle: 'Hydrating Botanical Toner - Cân bằng pH, thanh lọc da dịu nhẹ',
     description:
-      'Nước hoa hồng cân bằng thảo mộc GLANZ Botanical Balancing Toner (Hydrating Botanical Toner) với chiết xuất khuynh diệp thanh khiết và nước khoáng vùng núi Alps Thụy Sĩ. Chai thủy tinh vòi pump cao cấp cân bằng độ pH 5.5 lý tưởng, se khít lỗ chân lông và đánh thức làn da tràn đầy sinh khí.',
+      'Nước cân bằng thảo mộc Alps Botanical Balancing Toner kết hợp khuynh diệp thanh khiết và nước khoáng sông băng Alpine Thụy Sĩ, cân bằng pH 5.5 lý tưởng, làm dịu và se mịn bề mặt da.',
     rating: 4.8,
     reviewCount: 215,
     soldCount: '950',
@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
       'Cân bằng độ pH chuẩn 5.5 ngay sau bước rửa mặt',
       'Thanh lọc bụi bẩn còn sót lại và se mịn lỗ chân lông',
       'Làm dịu làn da mệt mỏi, stress do nhiệt độ và ánh sáng xanh',
-      'Chuẩn bị nền da thông thoáng tối ưu để hấp thụ serum'
+      'Củng cố hàng rào lipid tự nhiên, chuẩn bị nền da thông thoáng hấp thu dưỡng chất'
     ],
     usage: 'Nhấn 2 lần vòi pump ra bông cotton mềm lau nhẹ nhàng khắp mặt hoặc vỗ trực tiếp bằng tay cho đến khi ráo mịn.',
     routineStepNumber: 2,
@@ -84,7 +84,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'serum-radiance',
-    name: 'GLANZ Radiance Glow Serum',
+    name: 'Alps Radiance Glow Serum',
     shortName: 'Radiance Glow Serum',
     capacity: '30ML • 1 FL. OZ',
     category: 'serum',
@@ -93,7 +93,7 @@ export const PRODUCTS: Product[] = [
     tagType: 'bestseller',
     subtitle: 'Bột ngọc trai & Niacinamide dưỡng sáng chuyên sâu',
     description:
-      'Huyết thanh dưỡng sáng sinh học phân tử GLANZ Radiance Glow Serum chứa chiết xuất bột ngọc trai hữu cơ kết hợp cùng 10% Niacinamide tinh khiết và Hyaluronic Acid đa tầng, giúp phục hồi ánh sáng tự nhiên và làm đều màu da rõ rệt sau 14 ngày.',
+      'Huyết thanh dưỡng sáng sinh học phân tử Alps Radiance Glow Serum chứa chiết xuất bột ngọc trai hữu cơ kết hợp cùng 10% Niacinamide tinh khiết và Hyaluronic Acid đa tầng, giúp phục hồi ánh sáng tự nhiên và làm đều màu da rõ rệt sau 14 ngày.',
     rating: 4.9,
     reviewCount: 342,
     soldCount: '1.8k',
@@ -112,7 +112,7 @@ export const PRODUCTS: Product[] = [
       'Làm sáng và đều màu da sau 14 ngày sử dụng',
       'Mờ thâm mụn, giảm đỏ và ức chế hắc sắc tố Melanin',
       'Tạo hiệu ứng da bóng khỏe sương mai (Glass Skin)',
-      'Thấm nhanh tức thì, không gây bết dính hay bí tắc'
+      'Thẩm thấu nhanh chóng, tạo màng dưỡng bóng khỏe không nhờn rít'
     ],
     usage: 'Sử dụng 3-4 giọt mỗi sáng và tối sau bước toner. Vỗ nhẹ toàn mặt và cổ theo chuyển động hướng lên.',
     routineStepNumber: 3,
@@ -122,7 +122,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'cream-regenerating',
-    name: 'GLANZ Regenerating Face Cream',
+    name: 'Alps Regenerating Face Cream',
     shortName: 'Regenerating Face Cream',
     capacity: '50G',
     category: 'cream',
@@ -131,13 +131,13 @@ export const PRODUCTS: Product[] = [
     tagType: 'regen',
     subtitle: 'Ceramide Complex 3-6-9 phục hồi rào cản da ẩm mịn 72h',
     description:
-      'Kem dưỡng tái tạo kết cấu màng ẩm sinh học GLANZ Regenerating Face Cream với Ceramide Complex 3-6-9 và Bơ hạt mỡ hữu cơ. Nuôi dưỡng sâu, khóa ẩm 72 giờ và phục hồi hàng rào bảo vệ da yếu, nhạy cảm trước tác nhân môi trường.',
+      'Kem dưỡng tái tạo kết cấu màng ẩm sinh học Alps Regenerating Face Cream với Ceramide Complex 3-6-9 và Bơ hạt mỡ hữu cơ. Nuôi dưỡng sâu, khóa ẩm 72 giờ và phục hồi hàng rào bảo vệ da yếu, nhạy cảm trước tác nhân môi trường.',
     rating: 5.0,
     reviewCount: 289,
     soldCount: '1.2k',
     price: 395000,
     originalPrice: 480000,
-    note: 'Tặng kèm thìa bạc',
+    note: 'Tái tạo da 72H',
     image: faceCreamImg,
     fallbackImage: '/face cream.jpg',
     keyIngredients: [
@@ -150,9 +150,9 @@ export const PRODUCTS: Product[] = [
       'Khóa ẩm bền bỉ 72 giờ liên tục',
       'Phục hồi và làm dày hàng rào biểu bì bảo vệ da',
       'Làm dịu tức thì tình trạng khô rát, bong tróc',
-      'Kết cấu mềm xốp như kem tươi, hũ thủy tinh mờ nắp vàng champagne sang trọng'
+      'Bảo toàn trọn vẹn hoạt tính sinh học tế bào gốc tuyết Thụy Sĩ'
     ],
-    usage: 'Lấy lượng vừa đủ bằng thìa bạc đi kèm, chấm lên 5 điểm và thoa đều, áp nhẹ lòng bàn tay ấm để dưỡng chất thẩm thấu.',
+    usage: 'Lấy lượng vừa đủ chấm lên 5 điểm và thoa đều, áp nhẹ lòng bàn tay ấm để dưỡng chất thẩm thấu.',
     routineStepNumber: 4,
     routineStepTitle: 'Khóa ẩm & Phục hồi',
     inStock: true,
@@ -160,7 +160,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'mask-hydro-lifting',
-    name: 'GLANZ Hydro-Lifting Sheet Mask',
+    name: 'Alps Hydro-Lifting Sheet Mask',
     shortName: 'Hydro-Lifting Sheet Mask',
     capacity: 'HỘP 5 MIẾNG • 5 x 29G',
     category: 'mask',
@@ -169,7 +169,7 @@ export const PRODUCTS: Product[] = [
     tagType: 'mask',
     subtitle: 'Premium Hydrogel Sheet Mask - Intense Hydration & Firming',
     description:
-      'Mặt nạ thạch sinh học GLANZ Hydro-Lifting Sheet Mask (Premium Hydrogel Sheet Mask - Intense Hydration & Firming) cao cấp ôm khít từng đường nét gương mặt. Tinh chất đậm đặc chứa Collagen thủy phân phân tử siêu nhỏ và dịch chiết tảo tuyết Thụy Sĩ, mang đến hiệu ứng nâng cơ và căng bóng tức thì.',
+      'Mặt nạ thạch sinh học Alps Hydro-Lifting Sheet Mask (Premium Hydrogel Sheet Mask - Intense Hydration & Firming) cao cấp ôm khít từng đường nét gương mặt. Tinh chất đậm đặc chứa Collagen thủy phân phân tử siêu nhỏ và dịch chiết tảo tuyết Thụy Sĩ, mang đến hiệu ứng nâng cơ và căng bóng tức thì.',
     rating: 4.9,
     reviewCount: 198,
     soldCount: '780',
@@ -188,7 +188,7 @@ export const PRODUCTS: Product[] = [
       'Cấp ẩm chuyên sâu gấp 10 lần mặt nạ giấy thông thường',
       'Nâng cơ và cải thiện độ đàn hồi rõ rệt sau 20 phút',
       'Hạ nhiệt độ da tức thì -4.5°C, giải tỏa kích ứng',
-      'Hộp quà tặng 5 gói x 29g sang trọng chuẩn phòng sạch Zurich'
+      'Thư giãn làn da mệt mỏi, mang lại vẻ tươi mới và tràn đầy sức sống'
     ],
     usage: 'Đắp mặt nạ trong 20-30 phút sau khi làm sạch da. Gỡ mặt nạ và massage nhẹ nhàng dưỡng chất còn lại trên da, không cần rửa lại.',
     routineStepNumber: 5,
@@ -211,7 +211,7 @@ export const ROUTINE_STEPS = [
   {
     step: '01',
     name: 'Làm Sạch Sâu Dịu Nhẹ',
-    product: 'GLANZ Gentle Purifying Cleanser',
+    product: 'Alps Gentle Purifying Cleanser',
     time: '1 phút • Sáng & Tối',
     desc: 'Lớp bọt amino acid siêu mịn giải phóng bụi bẩn, bã nhờn mà vẫn bảo toàn hàng rào bảo vệ tự nhiên của da.',
     productId: 'cleanser-gentle-purifying',
@@ -220,7 +220,7 @@ export const ROUTINE_STEPS = [
   {
     step: '02',
     name: 'Cân Bằng & Thanh Lọc',
-    product: 'GLANZ Botanical Balancing Toner',
+    product: 'Alps Botanical Balancing Toner',
     time: '2 phút • Sáng & Tối',
     desc: 'Lấy lại độ pH 5.5 lý tưởng và đánh thức màng ẩm tự nhiên với nước khoáng sông băng Alpine và khuynh diệp thanh khiết.',
     productId: 'toner-botanical',
@@ -229,7 +229,7 @@ export const ROUTINE_STEPS = [
   {
     step: '03',
     name: 'Tái Sinh & Dưỡng Sáng',
-    product: 'GLANZ Radiance Glow Serum',
+    product: 'Alps Radiance Glow Serum',
     time: '3 phút • Sáng & Tối',
     desc: 'Thẩm thấu tinh chất ngọc trai và 10% Niacinamide vào tầng biểu bì sâu để làm đều màu và tạo hiệu ứng da bóng khỏe sương mai.',
     productId: 'serum-radiance',
@@ -238,7 +238,7 @@ export const ROUTINE_STEPS = [
   {
     step: '04',
     name: 'Khóa Ẩm & Phục Hồi',
-    product: 'GLANZ Regenerating Face Cream',
+    product: 'Alps Regenerating Face Cream',
     time: '2 phút • Sáng & Tối',
     desc: 'Củng cố hàng rào màng Ceramide 3-6-9, nuôi dưỡng sâu và khóa chặt dưỡng chất suốt 72 giờ.',
     productId: 'cream-regenerating',
@@ -247,7 +247,7 @@ export const ROUTINE_STEPS = [
   {
     step: '05',
     name: 'Nâng Cơ Chuyên Sâu',
-    product: 'GLANZ Hydro-Lifting Sheet Mask',
+    product: 'Alps Hydro-Lifting Sheet Mask',
     time: '20 phút • 2-3 lần/tuần',
     desc: 'Bổ sung dồi dào Collagen vi phân tử với mặt nạ thạch Premium Hydrogel, đem lại hiệu ứng căng mịn tức thì.',
     productId: 'mask-hydro-lifting',

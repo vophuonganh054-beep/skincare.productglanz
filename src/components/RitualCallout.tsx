@@ -33,7 +33,7 @@ export const RitualCallout: React.FC<RitualCalloutProps> = ({ onOpenRitual, isMo
         {/* Right Label */}
         <div className="flex items-center space-x-2 text-right">
           <div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#77767b] font-semibold">GLANZ</div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-[#77767b] font-semibold">ALPS</div>
             <div className="text-[11px] sm:text-xs uppercase tracking-[0.15em] font-serif text-[#74584d] font-medium">RITUAL</div>
           </div>
           <ChevronRight className="w-4 h-4 text-[#77767b] group-hover:translate-x-0.5 transition-transform" />

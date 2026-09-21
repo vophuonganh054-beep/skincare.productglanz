@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { HeroBanner } from './components/HeroBanner';
 import { RitualCallout } from './components/RitualCallout';
 import { CatalogSection } from './components/CatalogSection';
+import { MinimalistPackagingDesign } from './components/MinimalistPackagingDesign';
 import { BrandPhilosophy } from './components/BrandPhilosophy';
 import { BottomNav } from './components/BottomNav';
 import { ProductDetailModal } from './components/ProductDetailModal';
@@ -34,11 +35,11 @@ export default function App() {
   // Cart State (initialize with 2 items to match the '2' badge in user screenshot Image 1)
   const [cart, setCart] = useState<CartItem[]>([
     {
-      product: PRODUCTS[2], // GLANZ Radiance Glow Serum
+      product: PRODUCTS[2], // Alps Radiance Glow Serum
       quantity: 1,
     },
     {
-      product: PRODUCTS[3], // GLANZ Regenerating Face Cream
+      product: PRODUCTS[3], // Alps Regenerating Face Cream
       quantity: 1,
     },
   ]);
@@ -51,7 +52,7 @@ export default function App() {
   // Dynamic User Profile State (Logged In / Logged Out)
   const [user, setUser] = useState<UserProfile | null>(() => {
     try {
-      const saved = localStorage.getItem('glanz_user_profile');
+      const saved = localStorage.getItem('alps_user_profile');
       if (saved) return JSON.parse(saved);
     } catch {}
     return {
@@ -59,7 +60,7 @@ export default function App() {
       email: 'vophuonganh054@gmail.com',
       phone: '0908 123 489',
       address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
-      tier: 'Hội Viên GLANZ Pure Privileges',
+      tier: 'Hội Viên Alps Pure Privileges',
       points: 1250,
       avatarInitials: 'PA',
       isLoggedIn: true,
@@ -69,7 +70,7 @@ export default function App() {
   // Dynamic Order History State (Danh mục đã mua)
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
-      const saved = localStorage.getItem('glanz_purchased_orders');
+      const saved = localStorage.getItem('alps_purchased_orders');
       if (saved) return JSON.parse(saved);
     } catch {}
     return INITIAL_ORDERS;
@@ -79,16 +80,16 @@ export default function App() {
   useEffect(() => {
     try {
       if (user) {
-        localStorage.setItem('glanz_user_profile', JSON.stringify(user));
+        localStorage.setItem('alps_user_profile', JSON.stringify(user));
       } else {
-        localStorage.removeItem('glanz_user_profile');
+        localStorage.removeItem('alps_user_profile');
       }
     } catch {}
   }, [user]);
 
   useEffect(() => {
     try {
-      localStorage.setItem('glanz_purchased_orders', JSON.stringify(orders));
+      localStorage.setItem('alps_purchased_orders', JSON.stringify(orders));
     } catch {}
   }, [orders]);
 
@@ -105,7 +106,7 @@ export default function App() {
   const [isPoliciesOpen, setIsPoliciesOpen] = useState(false);
   const [policiesInitialTab, setPoliciesInitialTab] = useState<PolicyTabType>('returns');
   const [isCheckoutSuccessOpen, setIsCheckoutSuccessOpen] = useState(false);
-  const [latestOrderNumber, setLatestOrderNumber] = useState('GLZ-89421');
+  const [latestOrderNumber, setLatestOrderNumber] = useState('ALPS-89421');
   const [latestRecipient, setLatestRecipient] = useState<{
     name: string;
     phone: string;
@@ -141,7 +142,7 @@ export default function App() {
       email,
       phone: '0908 123 489',
       address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
-      tier: 'Hội Viên GLANZ Pure Privileges',
+      tier: 'Hội Viên Alps Pure Privileges',
       points: 1250,
       avatarInitials: initials,
       isLoggedIn: true,
@@ -174,7 +175,7 @@ export default function App() {
       return {
         ...(prev || {
           email: 'vophuonganh054@gmail.com',
-          tier: 'Hội Viên GLANZ Pure Privileges',
+          tier: 'Hội Viên Alps Pure Privileges',
           points: 1250,
           isLoggedIn: true,
         }),
@@ -300,9 +301,9 @@ export default function App() {
     setOrders((prev) => [order, ...prev]);
     setLatestOrderNumber(order.orderNumber);
     setLatestRecipient({
-      name: order.buyerName,
-      phone: order.phone,
-      address: order.shippingAddress,
+      name: order.buyerName || user?.name || 'Phương Anh',
+      phone: order.phone || user?.phone || '0908 123 489',
+      address: order.shippingAddress || user?.address || 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
     });
 
     // If order was placed from entire cart, clear the cart
@@ -337,7 +338,7 @@ export default function App() {
       address: shippingAddress,
     });
 
-    const newOrderNum = `GLZ-${Math.floor(100000 + Math.random() * 900000)}`;
+    const newOrderNum = `ALPS-${Math.floor(100000 + Math.random() * 900000)}`;
     const subtotal = cart.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
       0
@@ -428,7 +429,7 @@ export default function App() {
         <div className="flex items-center space-x-2">
           <span className="text-[#fed8c9]">✦</span>
           <span className="font-medium tracking-wide">
-            GLANZ Skincare • Đa Màn Hình
+            Alps Skincare • Đa Màn Hình
           </span>
         </div>
 
@@ -530,6 +531,14 @@ export default function App() {
                 />
               </div>
 
+              <MinimalistPackagingDesign
+                onOpenCollection={() => {
+                  const el = document.getElementById('catalog-section');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                isMobileFrame={true}
+              />
+
               <BrandPhilosophy isMobileFrame={true} />
 
               <Footer
@@ -604,6 +613,14 @@ export default function App() {
                 isMobileFrame={false}
               />
             </div>
+
+            <MinimalistPackagingDesign
+              onOpenCollection={() => {
+                const el = document.getElementById('desktop-catalog');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              isMobileFrame={false}
+            />
 
             <BrandPhilosophy isMobileFrame={false} />
           </main>

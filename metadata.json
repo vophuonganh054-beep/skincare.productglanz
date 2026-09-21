@@ -1,6 +1,6 @@
 {
-  "name": "GLANZ Skincare Pure Essence",
-  "description": "Website thương hiệu mỹ phẩm thuần chay chuẩn da liễu Thụy Sĩ với đầy đủ giao diện desktop và mobile",
+  "name": "Alps Skincare Pure Essence",
+  "description": "Thương hiệu dược mỹ phẩm thuần chay tế bào gốc sông băng Thụy Sĩ Alps Pure Essence",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

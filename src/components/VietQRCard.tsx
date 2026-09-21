@@ -18,17 +18,16 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  // Fake account details named "GLANZ" as explicitly requested by user:
-  // "chuyển vào mã QR này hoặc số tài khoản ma không có thật (đặt lên là GLANZ)"
+  // Fake account details named "ALPS" as requested:
   const bankInfo = {
     bankName: 'MB Bank (Ngân hàng TMCP Quân Đội)',
     bankCode: 'MB',
-    accountNumber: '9999GLANZ88',
-    accountDisplayNumber: '9999 GLANZ 88',
-    accountName: 'GLANZ',
+    accountNumber: '9999ALPS88',
+    accountDisplayNumber: '9999 ALPS 88',
+    accountName: 'ALPS',
     branch: 'Chi nhánh Landmark 81 - TP.HCM',
     amount: amount,
-    memo: `GLZ ${orderNumber.replace(/[^a-zA-Z0-9]/g, '')}`,
+    memo: `ALPS ${orderNumber.replace(/[^a-zA-Z0-9]/g, '')}`,
   };
 
   useEffect(() => {
@@ -70,12 +69,12 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
     if (!qrDataUrl) return;
     const a = document.createElement('a');
     a.href = qrDataUrl;
-    a.download = `VietQR_GLANZ_${orderNumber}.png`;
+    a.download = `VietQR_ALPS_${orderNumber}.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     if (onShowToast) {
-      onShowToast('Đã tải mã VietQR GLANZ về máy');
+      onShowToast('Đã tải mã VietQR Alps về máy');
     }
   };
 
@@ -159,7 +158,7 @@ export const VietQRCard: React.FC<VietQRCardProps> = ({
         <div className="flex items-center justify-between pb-2 border-b border-[#202022]/6">
           <div className="flex items-center space-x-1.5 font-semibold text-[#1c1c19]">
             <Building className="w-4 h-4 text-[#74584d]" />
-            <span>Thông tin chuyển khoản GLANZ</span>
+            <span>Thông tin chuyển khoản Alps</span>
           </div>
           <span className="text-[10px] bg-[#8a9a86]/15 text-[#8a9a86] font-semibold px-2 py-0.5 rounded-full">
             Chính thức

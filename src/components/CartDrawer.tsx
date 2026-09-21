@@ -64,11 +64,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const applyPromo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (promoCode.trim().toUpperCase() === 'GLANZ2025') {
+    const code = promoCode.trim().toUpperCase();
+    if (code === 'ALPS2025' || code === 'ALPS10') {
       setDiscountPercent(10);
-      setPromoMessage({ text: 'Áp dụng thành công mã GLANZ2025 (-10%)', isError: false });
+      setPromoMessage({ text: `Áp dụng thành công mã ${code} (-10%)`, isError: false });
     } else {
-      setPromoMessage({ text: 'Mã giảm giá không hợp lệ. Thử: GLANZ2025', isError: true });
+      setPromoMessage({ text: 'Mã giảm giá không hợp lệ. Thử: ALPS2025', isError: true });
     }
   };
 
@@ -247,7 +248,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   type="text"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Mã ưu đãi (thử GLANZ2025)"
+                  placeholder="Mã ưu đãi (thử ALPS2025)"
                   className="w-full text-xs pl-8 pr-3 py-2 bg-[#f6f3ee] rounded-xl border border-[#ebe8e3] uppercase focus:outline-none focus:ring-1 focus:ring-[#74584d]"
                 />
               </div>

@@ -23,7 +23,7 @@ export const SHIPPING_CARRIERS: ShippingCarrier[] = [
   {
     id: 'express',
     name: 'Hỏa Tốc Zurich 2H',
-    fullName: 'GLANZ VIP Zurich Express (Ahamove / Grab)',
+    fullName: 'ALPS VIP Zurich Express (Ahamove / Grab)',
     estimatedTime: '1 - 2 giờ',
     price: 45000,
     badge: 'Hỏa tốc 2h',

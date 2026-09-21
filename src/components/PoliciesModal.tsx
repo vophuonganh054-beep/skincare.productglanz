@@ -35,7 +35,7 @@ export const PoliciesModal: React.FC<PoliciesModalProps> = ({
             </div>
             <div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-[#74584d] font-semibold">
-                GLANZ PURE ESSENCE • ZURICH
+                ALPS PURE ESSENCE • ZURICH
               </div>
               <h2 className="font-serif text-lg sm:text-xl font-normal text-[#1c1c19] tracking-tight">
                 Chính Sách & Cam Kết Dịch Vụ
@@ -103,7 +103,7 @@ export const PoliciesModal: React.FC<PoliciesModalProps> = ({
                     Cam kết Đổi Trả Miễn Phí 30 Ngày & Bảo Hiểm Kích Ứng Da Liễu
                   </h4>
                   <p className="text-[11px] text-[#77767b] mt-0.5">
-                    GLANZ tự hào về độ lành tính chuẩn Thụy Sĩ. Nếu làn da bạn gặp bất kỳ kích ứng nào dù nhỏ nhất, chúng tôi hoàn tiền 100% không phiền hà.
+                    Alps tự hào về độ lành tính chuẩn Thụy Sĩ. Nếu làn da bạn gặp bất kỳ kích ứng nào dù nhỏ nhất, chúng tôi hoàn tiền 100% không phiền hà.
                   </p>
                 </div>
               </div>
@@ -156,7 +156,7 @@ export const PoliciesModal: React.FC<PoliciesModalProps> = ({
                     Quy Chuẩn Vận Chuyển Phòng Sạch & Đồng Kiểm Khi Nhận
                   </h4>
                   <p className="text-[11px] text-[#77767b] mt-0.5">
-                    100% đơn hàng GLANZ được bảo quản trong hộp giữ nhiệt 3 lớp, chống tia UV và chống sốc nhiệt dược mỹ phẩm.
+                    100% đơn hàng Alps được bảo quản trong hộp giữ nhiệt 3 lớp, chống tia UV và chống sốc nhiệt dược mỹ phẩm.
                   </p>
                 </div>
               </div>
@@ -234,7 +234,7 @@ export const PoliciesModal: React.FC<PoliciesModalProps> = ({
                     <span>2. Cam kết KHÔNG chia sẻ cho bên thứ ba</span>
                   </h5>
                   <p className="text-[#46464a]">
-                    GLANZ cam kết không bán, không thương mại hóa, không chia sẻ số điện thoại hoặc dữ liệu mua hàng của quý khách cho bất kỳ mục đích quảng cáo rác nào.
+                    Alps cam kết không bán, không thương mại hóa, không chia sẻ số điện thoại hoặc dữ liệu mua hàng của quý khách cho bất kỳ mục đích quảng cáo rác nào.
                   </p>
                 </div>
 

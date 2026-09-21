@@ -30,7 +30,7 @@ export const RitualModal: React.FC<RitualModalProps> = ({
         <div className="p-5 sm:p-6 bg-white border-b border-[#202022]/8 flex items-center justify-between">
           <div>
             <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#74584d]">
-              GLANZ RITUAL • THỤY SĨ
+              ALPS RITUAL • THỤY SĨ
             </span>
             <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#1c1c19]">
               Nghi Thức Dưỡng Sáng Tự Nhiên {ROUTINE_STEPS.length} Bước
@@ -131,7 +131,7 @@ export const RitualModal: React.FC<RitualModalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-[#77767b] mt-1">
-                Tặng kèm thìa bạc cao cấp & túi nhung GLANZ độc quyền.
+                Tặng kèm thìa bạc cao cấp & túi nhung Alps độc quyền.
               </p>
             </div>
 

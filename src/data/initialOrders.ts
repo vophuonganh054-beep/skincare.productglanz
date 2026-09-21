@@ -4,7 +4,7 @@ import { PRODUCTS } from './products';
 export const INITIAL_ORDERS: Order[] = [
   {
     id: 'ord-178970001',
-    orderNumber: 'GLZ-889214',
+    orderNumber: 'ALPS-889214',
     createdAt: '16/09/2026 • 14:32',
     status: 'delivered',
     statusLabel: 'Đã giao thành công',
@@ -28,7 +28,7 @@ export const INITIAL_ORDERS: Order[] = [
   },
   {
     id: 'ord-178960002',
-    orderNumber: 'GLZ-764109',
+    orderNumber: 'ALPS-764109',
     createdAt: '02/09/2026 • 09:15',
     status: 'delivered',
     statusLabel: 'Đã giao thành công',

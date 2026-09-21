@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
           <div className="md:col-span-1 space-y-3">
             <div className="flex items-center space-x-1.5">
               <span className="text-sm text-[#fed8c9]">✦</span>
-              <span className="font-serif text-xl tracking-[0.25em] text-white">GLANZ</span>
+              <span className="font-serif text-xl tracking-[0.25em] text-white">ALPS</span>
             </div>
             <div className="text-[9px] uppercase tracking-[0.25em] text-[#898789]">
               SKINCARE • PURE ESSENCE
@@ -36,11 +36,11 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               BỘ SƯU TẬP
             </h4>
             <ul className="space-y-2 text-xs text-[#c7c6ca]">
-              <li className="hover:text-white cursor-pointer transition-colors">GLANZ Gentle Purifying Cleanser (120ml)</li>
-              <li className="hover:text-white cursor-pointer transition-colors">GLANZ Botanical Balancing Toner (100ml)</li>
-              <li className="hover:text-white cursor-pointer transition-colors">GLANZ Radiance Glow Serum (30ml)</li>
-              <li className="hover:text-white cursor-pointer transition-colors">GLANZ Regenerating Face Cream (50g)</li>
-              <li className="hover:text-white cursor-pointer transition-colors">GLANZ Hydro-Lifting Sheet Mask (5x29g)</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Alps Gentle Purifying Cleanser (120ml)</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Alps Botanical Balancing Toner (100ml)</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Alps Radiance Glow Serum (30ml)</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Alps Regenerating Face Cream (50g)</li>
+              <li className="hover:text-white cursor-pointer transition-colors">Alps Hydro-Lifting Sheet Mask (5x29g)</li>
             </ul>
           </div>
 
@@ -65,8 +65,8 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               </li>
               <li className="flex items-center space-x-2">
                 <span className="text-[#fed8c9]">Email CSKH:</span>
-                <a href="mailto:cskh@glanz.vn" className="hover:text-white transition-colors">
-                  cskh@glanz.vn
+                <a href="mailto:cskh@alps.vn" className="hover:text-white transition-colors">
+                  cskh@alps.vn
                 </a>
               </li>
               <li
@@ -127,7 +127,7 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
 
         {/* Bottom copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#898789] gap-3 text-center sm:text-left">
-          <p>© 2025 GLANZ Pure Essence. All rights reserved.</p>
+          <p>© 2025 Alps Pure Essence. All rights reserved.</p>
           <div className="flex flex-wrap items-center justify-center space-x-3 text-[11px]">
             <button
               onClick={() => onOpenPolicies ? onOpenPolicies('privacy') : undefined}
@@ -161,7 +161,9 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               <span className="hover:text-white cursor-pointer">Hotline: 1900 8899</span>
             )}
             <span>•</span>
-            <span className="hover:text-white cursor-pointer">cskh@glanz.vn</span>
+            <a href="mailto:cskh@alps.vn" className="hover:text-white transition-colors">cskh@alps.vn</a>
+            <span>•</span>
+            <a href="https://alps.vn" className="hover:text-[#fed8c9] text-white font-medium transition-colors">alps.vn</a>
           </div>
         </div>
       </div>

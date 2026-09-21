@@ -18,6 +18,8 @@ import {
   Tag,
   AlertCircle,
   HelpCircle,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { CartItem, Product, UserProfile, Order, PaymentMethodType, ShippingCarrier } from '../types';
 import { SHIPPING_CARRIERS } from '../data/shippingCarriers';
@@ -54,6 +56,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   // Shipping Carrier selection
   const [selectedCarrierId, setSelectedCarrierId] = useState<'ghtk' | 'ghn' | 'express' | 'viettel'>('ghtk');
+  const [isCarrierSelectorOpen, setIsCarrierSelectorOpen] = useState(false);
 
   // Payment Method selection: COD, VietQR, Bank Transfer
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>('vietqr');
@@ -68,7 +71,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Generate order number for this session
-  const [orderNumber] = useState(() => `GLZ-${Math.floor(10000 + Math.random() * 90000)}`);
+  const [orderNumber] = useState(() => `ALPS-${Math.floor(10000 + Math.random() * 90000)}`);
 
   if (!isOpen) return null;
 
@@ -86,10 +89,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleApplyPromo = () => {
     const code = promoCode.trim().toUpperCase();
-    if (code === 'GLANZ10' || code === 'SWISS10') {
+    if (code === 'ALPS10' || code === 'ALPS2025') {
       setDiscountPercent(10);
       setPromoApplied(true);
-      onShowToast('Đã áp dụng mã ưu đãi GLANZ10: Giảm 10%');
+      onShowToast(`Đã áp dụng mã ưu đãi ${code}: Giảm 10%`);
     } else if (code === 'VIP20' || code === 'VEGAN20') {
       setDiscountPercent(20);
       setPromoApplied(true);
@@ -145,7 +148,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         paymentMethod === 'vietqr'
           ? 'VietQR MB Bank (Quét mã tức thì)'
           : paymentMethod === 'bank_transfer'
-          ? 'Chuyển khoản ngân hàng GLANZ'
+          ? 'Chuyển khoản ngân hàng ALPS'
           : 'Thanh toán khi nhận hàng (COD)',
       paymentMethodType: paymentMethod,
       shippingCarrier: selectedCarrier.fullName,
@@ -176,7 +179,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             </div>
             <div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-[#74584d] font-semibold">
-                THANH TOÁN AN TOÀN • GLANZ ZURICH
+                THANH TOÁN AN TOÀN • ALPS ZURICH
               </div>
               <h2 className="font-serif text-lg sm:text-xl font-normal text-[#1c1c19] tracking-tight">
                 Xác Nhận & Đặt Hàng ({orderNumber})
@@ -291,7 +294,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <div className="flex items-center justify-between pb-2 border-b border-[#202022]/6">
                   <div className="flex items-center space-x-2 text-xs font-semibold text-[#1c1c19] uppercase tracking-wider">
                     <Truck className="w-4 h-4 text-[#74584d]" />
-                    <span>2. Chọn đơn vị vận chuyển</span>
+                    <span>2. Đơn vị vận chuyển</span>
                   </div>
                   {onOpenPolicies && (
                     <button
@@ -304,60 +307,119 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {SHIPPING_CARRIERS.map((carrier) => {
-                    const isSelected = selectedCarrierId === carrier.id;
-                    const isCarrierFree = carrier.freeThreshold && subtotal >= carrier.freeThreshold;
+                {/* Compact Selected Carrier Row (Collapsed by default, click to expand) */}
+                <div
+                  onClick={() => setIsCarrierSelectorOpen(!isCarrierSelectorOpen)}
+                  className="cursor-pointer p-3 sm:p-3.5 rounded-xl border border-[#d8c3b5] bg-[#fbf9f6] hover:bg-[#f6f2ec] transition-all flex items-center justify-between group"
+                  title={isCarrierSelectorOpen ? 'Bấm để thu gọn' : 'Bấm để đổi đơn vị vận chuyển'}
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-white border border-[#202022]/8 flex items-center justify-center text-[#74584d] shrink-0 shadow-2xs">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-semibold text-xs sm:text-sm text-[#1c1c19] truncate">
+                          {selectedCarrier.name}
+                        </span>
+                        {isFreeShipping ? (
+                          <span className="text-[9.5px] font-bold text-[#8a9a86] bg-[#8a9a86]/10 px-1.5 py-0.2 rounded">
+                            Miễn phí
+                          </span>
+                        ) : (
+                          <span className="text-[10.5px] font-bold text-[#1c1c19]">
+                            {selectedCarrier.price.toLocaleString('vi-VN')}₫
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[11px] text-[#77767b] block mt-0.5">
+                        Dự kiến: {selectedCarrier.estimatedTime}
+                      </span>
+                    </div>
+                  </div>
 
-                    return (
-                      <label
-                        key={carrier.id}
-                        onClick={() => setSelectedCarrierId(carrier.id)}
-                        className={`cursor-pointer p-3 rounded-xl border transition-all flex flex-col justify-between ${
-                          isSelected
-                            ? 'border-[#74584d] bg-[#fed8c9]/10 ring-1 ring-[#74584d]'
-                            : 'border-[#202022]/8 bg-[#fcf9f4] hover:bg-[#f6f3ee]'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center space-x-2">
-                            <input
-                              type="radio"
-                              name="carrier"
-                              checked={isSelected}
-                              onChange={() => setSelectedCarrierId(carrier.id)}
-                              className="text-[#74584d] focus:ring-[#74584d]"
-                            />
-                            <div>
-                              <span className="font-semibold text-xs text-[#1c1c19] block">
-                                {carrier.name}
-                              </span>
-                              <span className="text-[10px] text-[#77767b]">
-                                Dự kiến: {carrier.estimatedTime}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="text-right">
-                            {isCarrierFree ? (
-                              <span className="text-[11px] font-bold text-[#8a9a86]">
-                                MIỄN PHÍ
-                              </span>
-                            ) : (
-                              <span className="text-xs font-bold text-[#1c1c19]">
-                                {carrier.price.toLocaleString('vi-VN')}₫
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <p className="text-[10px] text-[#77767b] mt-1.5 line-clamp-2">
-                          {carrier.description}
-                        </p>
-                      </label>
-                    );
-                  })}
+                  <div className="flex items-center space-x-1.5 text-[#74584d] group-hover:text-[#5a3a30] text-xs font-medium shrink-0 ml-2">
+                    <span className="hidden xs:inline">{isCarrierSelectorOpen ? 'Thu gọn' : 'Đổi đơn vị'}</span>
+                    {isCarrierSelectorOpen ? (
+                      <ChevronUp className="w-4 h-4 transition-transform" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 transition-transform" />
+                    )}
+                  </div>
                 </div>
+
+                {/* Collapsible Carrier Selection List */}
+                {isCarrierSelectorOpen && (
+                  <div className="pt-2 space-y-2.5 animate-in fade-in duration-200">
+                    <div className="flex items-center justify-between text-[11px] text-[#77767b] px-0.5">
+                      <span>Chọn đơn vị vận chuyển giao hàng:</span>
+                      <button
+                        type="button"
+                        onClick={() => setIsCarrierSelectorOpen(false)}
+                        className="text-[#74584d] hover:underline font-medium text-[11px]"
+                      >
+                        Thu gọn
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {SHIPPING_CARRIERS.map((carrier) => {
+                        const isSelected = selectedCarrierId === carrier.id;
+                        const isCarrierFree = carrier.freeThreshold && subtotal >= carrier.freeThreshold;
+
+                        return (
+                          <label
+                            key={carrier.id}
+                            onClick={() => {
+                              setSelectedCarrierId(carrier.id);
+                            }}
+                            className={`cursor-pointer p-3 rounded-xl border transition-all flex flex-col justify-between ${
+                              isSelected
+                                ? 'border-[#74584d] bg-[#fed8c9]/15 ring-1 ring-[#74584d]'
+                                : 'border-[#202022]/8 bg-[#fcf9f4] hover:bg-[#f6f3ee]'
+                            }`}
+                          >
+                            <div className="flex items-start justify-between">
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="radio"
+                                  name="carrier"
+                                  checked={isSelected}
+                                  onChange={() => setSelectedCarrierId(carrier.id)}
+                                  className="text-[#74584d] focus:ring-[#74584d]"
+                                />
+                                <div>
+                                  <span className="font-semibold text-xs text-[#1c1c19] block">
+                                    {carrier.name}
+                                  </span>
+                                  <span className="text-[10px] text-[#77767b]">
+                                    Dự kiến: {carrier.estimatedTime}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="text-right">
+                                {isCarrierFree ? (
+                                  <span className="text-[11px] font-bold text-[#8a9a86]">
+                                    MIỄN PHÍ
+                                  </span>
+                                ) : (
+                                  <span className="text-xs font-bold text-[#1c1c19]">
+                                    {carrier.price.toLocaleString('vi-VN')}₫
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <p className="text-[10px] text-[#77767b] mt-1.5 line-clamp-2">
+                              {carrier.description}
+                            </p>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* 3. PHƯƠNG THỨC THANH TOÁN */}
@@ -404,7 +466,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <span className="text-[9px] text-[#77767b]">Đồng kiểm nhận hàng</span>
                   </button>
 
-                  {/* Option 3: Chuyển khoản ngân hàng (TK ma tên GLANZ) */}
+                  {/* Option 3: Chuyển khoản ngân hàng (TK mang tên ALPS) */}
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('bank_transfer')}
@@ -416,7 +478,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   >
                     <Building className="w-5 h-5 text-[#002f87]" />
                     <span className="text-[11px]">Chuyển Khoản</span>
-                    <span className="text-[9px] text-[#77767b]">TK GLANZ MB</span>
+                    <span className="text-[9px] text-[#77767b]">TK ALPS MB</span>
                   </button>
                 </div>
 
@@ -463,7 +525,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     <div className="space-y-3">
                       <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl text-xs text-[#1c1c19]">
                         <p className="font-semibold text-[11px] text-[#002f87]">
-                          Chuyển khoản thủ công vào số tài khoản đại diện thương hiệu GLANZ:
+                          Chuyển khoản thủ công vào số tài khoản đại diện thương hiệu Alps:
                         </p>
                         <p className="text-[11px] text-[#77767b] mt-0.5">
                           Sau khi chuyển khoản, đơn hàng sẽ được bộ phận kế toán tự động duyệt trong 60 giây.
@@ -490,7 +552,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     Sản phẩm đặt mua ({items.reduce((s, i) => s + i.quantity, 0)})
                   </h3>
                   <span className="text-[10px] text-[#74584d] font-semibold uppercase">
-                    GLANZ SWISS
+                    ALPS
                   </span>
                 </div>
 
@@ -530,7 +592,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       type="text"
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
-                      placeholder="Nhập mã ưu đãi (VD: GLANZ10)"
+                      placeholder="Nhập mã ưu đãi (VD: ALPS10)"
                       className="flex-grow px-3 py-2 bg-[#fcf9f4] border border-[#ebe8e3] rounded-xl text-xs uppercase tracking-wider focus:outline-none focus:border-[#74584d]"
                     />
                     <button
@@ -589,7 +651,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <div className="pt-2 border-t border-[#202022]/6 text-[11px] text-[#77767b] space-y-1">
                     <p className="flex items-center space-x-1 text-[#74584d] font-medium">
                       <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>Đặc quyền khách hàng GLANZ:</span>
+                      <span>Đặc quyền khách hàng Alps:</span>
                     </p>
                     <div className="flex flex-wrap gap-2 text-[10px]">
                       <button

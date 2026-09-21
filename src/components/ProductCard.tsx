@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, ShoppingBag, Star } from 'lucide-react';
+import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -68,8 +68,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="pt-2.5 sm:pt-3 flex flex-col flex-grow justify-between">
         <div>
           {/* Brand & Volume/Capacity */}
-          <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.14em] text-[#77767b] font-medium">
-            GLANZ • {product.capacity}
+          <div className="flex items-center justify-between text-[10px] sm:text-[11px] uppercase tracking-[0.14em] text-[#77767b] font-medium">
+            <span>ALPS • {product.capacity}</span>
+            <span className="text-[9px] font-semibold text-[#74584d] tracking-normal bg-[#f7f2ee] px-1.5 py-0.2 rounded border border-[#74584d]/20">
+              Pure Alps
+            </span>
           </div>
 
           {/* Product Title */}
@@ -78,19 +81,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </h4>
 
           {/* Subtitle / Key Ingredient */}
-          <p className="text-[11px] sm:text-xs text-[#77767b] font-light mt-0.5 line-clamp-1">
+          <p className="text-[11px] sm:text-xs text-[#77767b] font-light mt-1 line-clamp-1">
             {product.subtitle}
           </p>
-
-          {/* Rating & Sold count */}
-          <div className="flex items-center space-x-1.5 mt-1.5 text-[11px] text-[#46464a]">
-            <div className="flex items-center text-[#d48b38]">
-              <Star className="w-3 h-3 fill-current" />
-              <span className="font-medium ml-0.5">{product.rating.toFixed(1)}</span>
-            </div>
-            <span className="text-[#c7c6ca]">|</span>
-            <span className="text-[#77767b] text-[10px] sm:text-[11px]">Đã bán {product.soldCount}</span>
-          </div>
         </div>
 
         {/* Bottom Pricing & Cart Action */}

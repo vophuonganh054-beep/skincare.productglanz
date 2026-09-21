@@ -45,11 +45,11 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
         </span>
 
         <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1c1c19]">
-          Cảm ơn bạn đã lựa chọn GLANZ
+          Cảm ơn bạn đã lựa chọn Alps
         </h3>
 
         <p className="text-xs text-[#46464a] mt-2 leading-relaxed">
-          Đơn hàng <span className="font-semibold text-[#1c1c19]">#{orderNumber}</span> đã được chuyển đến bộ phận đóng gói theo tiêu chuẩn phòng sạch Zurich.
+          Đơn hàng <span className="font-semibold text-[#1c1c19]">#{orderNumber}</span> đã được chuyển đến bộ phận xử lý và chuẩn bị giao hàng theo quy chuẩn Alps Thụy Sĩ.
         </p>
 
         {/* Shipping address info */}
@@ -74,11 +74,11 @@ export const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
         <div className="bg-[#fcf9f4] rounded-2xl p-4 mt-3 text-left border border-[#ebe8e3] text-xs space-y-2">
           <div className="flex items-center space-x-2 text-[#74584d] font-medium">
             <Sparkles className="w-4 h-4" />
-            <span>Đặc quyền gửi kèm đơn hàng:</span>
+            <span>Đặc quyền & quà tặng gửi kèm:</span>
           </div>
-          <ul className="text-[#46464a] space-y-1 pl-6 list-disc">
-            <li>01 Túi vải nhung lót lụa GLANZ Pure Essence</li>
-            <li>Bộ mẫu thử 3 ngày dòng Serum Tái Sinh Ngọc Trai</li>
+          <ul className="text-[#46464a] space-y-1 pl-6 list-disc text-[11px]">
+            <li>Tem niêm phong bảo chứng chất lượng tinh hoa Thụy Sĩ Alps</li>
+            <li>Bộ mẫu thử 3 ngày dòng Serum Tái Sinh Ngọc Trai Thụy Sĩ</li>
             <li>Thư cảm ơn và chứng thư bảo chứng xuất xứ Zurich</li>
           </ul>
         </div>

@@ -125,6 +125,15 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
               <button
                 onClick={() => {
+                  const el = document.getElementById('minimalist-packaging');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="transition-colors hover:text-[#1c1c19]"
+              >
+                THIẾT KẾ BAO BÌ
+              </button>
+              <button
+                onClick={() => {
                   if (onOpenAccount) onOpenAccount();
                   else onSelectTab('account');
                 }}
@@ -155,19 +164,19 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Center: Brand Logo (as seen in Image 1 screenshot) */}
+        {/* Center: Brand Logo */}
         <div
           onClick={() => onSelectTab('home')}
-          className="cursor-pointer text-center select-none"
+          className="cursor-pointer text-center select-none group"
         >
-          <div className="flex items-center justify-center space-x-1">
+          <div className="flex items-center justify-center space-x-1.5">
             <span className="text-xs text-[#74584d]">✦</span>
-            <span className="font-serif text-lg md:text-xl font-normal tracking-[0.25em] text-[#1c1c19] ml-1">
-              GLANZ
+            <span className="font-serif text-lg md:text-xl font-normal tracking-[0.28em] text-[#1c1c19] ml-1 group-hover:text-[#74584d] transition-colors">
+              ALPS
             </span>
           </div>
           <div className="text-[8px] md:text-[9px] tracking-[0.25em] text-[#77767b] font-light uppercase">
-            SKINCARE • PURE ESSENCE
+            PURE ESSENCE
           </div>
         </div>
 
@@ -258,13 +267,13 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="p-2 bg-[#fcf9f4] rounded-xl border border-[#ebe8e3]/60">
                     <p className="font-medium text-[#74584d]">✦ Ra mắt BST Pure Radiance 2025</p>
                     <p className="text-[#46464a] text-[11px] mt-0.5">
-                      Tặng kèm thìa bạc cao cấp cho mọi đơn hàng có GLANZ Regenerating Cream.
+                      Tặng kèm thìa bạc cao cấp cho mọi đơn hàng có Alps Regenerating Cream.
                     </p>
                   </div>
                   <div className="p-2 bg-[#fcf9f4] rounded-xl border border-[#ebe8e3]/60">
-                    <p className="font-medium text-[#1c1c19]">Ưu đãi mã GLANZ2025</p>
+                    <p className="font-medium text-[#1c1c19]">Ưu đãi mã ALPS2025</p>
                     <p className="text-[#46464a] text-[11px] mt-0.5">
-                      Giảm ngay 10% khi nhập mã tại giỏ hàng.
+                      Giảm ngay 10% khi nhập mã tại giỏ hàng hoặc trang thanh toán.
                     </p>
                   </div>
                 </div>

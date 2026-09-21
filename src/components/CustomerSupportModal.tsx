@@ -54,7 +54,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
       return;
     }
 
-    const ticketId = `GLZ-CSKH-${Math.floor(10000 + Math.random() * 90000)}`;
+    const ticketId = `ALPS-CSKH-${Math.floor(10000 + Math.random() * 90000)}`;
     const now = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
     setSubmittedTicket({ id: ticketId, time: now });
     onShowToast(`Đã tiếp nhận phiếu hỗ trợ #${ticketId}. Chuyên viên sẽ gọi lại trong 15 phút!`);
@@ -67,9 +67,9 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
 
   const faqs = [
     {
-      question: 'Chính sách đổi trả 30 ngày của GLANZ hoạt động như thế nào?',
+      question: 'Chính sách đổi trả 30 ngày của Alps hoạt động như thế nào?',
       answer:
-        'GLANZ cam kết đổi trả miễn phí hoặc hoàn tiền 100% trong vòng 30 ngày kể từ ngày nhận hàng, ngay cả khi quý khách đã mở nắp và trải nghiệm sản phẩm nếu xảy ra bất kỳ hiện tượng không tương thích hay kích ứng da nào.',
+        'Alps cam kết đổi trả miễn phí hoặc hoàn tiền 100% trong vòng 30 ngày kể từ ngày nhận hàng, ngay cả khi quý khách đã mở nắp và trải nghiệm sản phẩm nếu xảy ra bất kỳ hiện tượng không tương thích hay kích ứng da nào.',
     },
     {
       question: 'Tôi có thể thay đổi địa chỉ hoặc số điện thoại sau khi đặt hàng không?',
@@ -82,14 +82,14 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
         'Tại khu vực nội thành TP. Hồ Chí Minh và Hà Nội: Hỗ trợ giao hỏa tốc trong 2-4 giờ hoặc trong ngày. Đối với các tỉnh thành khác: Giao hàng từ 24 - 48 giờ với thùng bảo ôn đạt chuẩn phòng sạch Zurich.',
     },
     {
-      question: 'Sản phẩm GLANZ có an toàn cho phụ nữ mang thai và da nhạy cảm?',
+      question: 'Sản phẩm Alps có an toàn cho phụ nữ mang thai và da nhạy cảm?',
       answer:
-        'Tất cả sản phẩm GLANZ đều đạt tiêu chuẩn Thuần Chay Châu Âu (Vegan Certified) và được kiểm định da liễu nghiêm ngặt tại Zurich, Thụy Sĩ. 100% không cồn khô, không paraben, không hương liệu tổng hợp, đặc biệt an toàn cho phụ nữ mang thai, mẹ bỉm sữa và làn da nhạy cảm nhất.',
+        'Tất cả sản phẩm Alps đều đạt tiêu chuẩn Thuần Chay Châu Âu (Vegan Certified) và được kiểm định da liễu nghiêm ngặt tại Zurich, Thụy Sĩ. 100% không cồn khô, không paraben, không hương liệu tổng hợp, đặc biệt an toàn cho phụ nữ mang thai, mẹ bỉm sữa và làn da nhạy cảm nhất.',
     },
     {
       question: 'Làm thế nào để được chuyên gia da liễu Thụy Sĩ lên phác đồ dưỡng da 1:1?',
       answer:
-        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua Zalo Official Account của GLANZ. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
+        'Quý khách có thể gửi yêu cầu trong tab "Gửi Yêu Cầu Hỗ Trợ" hoặc nhắn tin trực tiếp qua Zalo Official Account của Alps. Chuyên viên sẽ phân tích ảnh chụp nền da và thiết lập phác đồ cá nhân hóa hoàn toàn miễn phí.',
     },
   ];
 
@@ -111,7 +111,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
 
           <div className="flex items-center space-x-2 text-[#fed8c9] text-xs font-semibold uppercase tracking-[0.2em] mb-1.5">
             <Headphones className="w-4 h-4 text-[#fed8c9]" />
-            <span>TRUNG TÂM CHĂM SÓC KHÁCH HÀNG GLANZ</span>
+            <span>TRUNG TÂM CHĂM SÓC KHÁCH HÀNG ALPS</span>
           </div>
 
           <h3 className="font-serif text-xl sm:text-2xl text-white font-normal">
@@ -119,7 +119,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
           </h3>
 
           <p className="text-xs text-[#c7c6ca] mt-1.5 leading-relaxed max-w-lg">
-            Đội ngũ chuyên viên GLANZ luôn sẵn sàng lắng nghe, tư vấn phác đồ và giải quyết mọi yêu cầu của bạn 24/7.
+            Đội ngũ chuyên viên Alps luôn sẵn sàng lắng nghe, tư vấn phác đồ và giải quyết mọi yêu cầu của bạn 24/7.
           </p>
 
           {/* Sub Navigation Tabs */}
@@ -270,7 +270,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                         <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#0068ff] transition-colors">
                           Zalo Official
                         </div>
-                        <div className="text-[10px] text-[#77767b]">GLANZ Pure Skincare</div>
+                        <div className="text-[10px] text-[#77767b]">Alps Pure Skincare</div>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />
@@ -278,7 +278,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
 
                   {/* Email Support */}
                   <a
-                    href="mailto:cskh@glanz.vn"
+                    href="mailto:cskh@alps.vn"
                     className="p-3 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
                   >
                     <div className="flex items-center space-x-2.5">
@@ -289,7 +289,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                         <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#74584d] transition-colors">
                           Email Hộp Thư CSKH
                         </div>
-                        <div className="text-[10px] text-[#77767b]">cskh@glanz.vn</div>
+                        <div className="text-[10px] text-[#77767b]">cskh@alps.vn</div>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />
@@ -359,7 +359,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                   </div>
                 </div>
 
-                {/* Swiss Global Laboratory */}
+                {/* Global Laboratory */}
                 <div className="pt-2 flex items-center justify-between text-[11px] text-[#77767b] border-t border-[#f0ede9]">
                   <span className="flex items-center space-x-1">
                     <span className="text-[#ba1a1a] font-bold">🇨🇭</span>
@@ -369,11 +369,11 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                 </div>
               </div>
 
-              {/* 4 Swiss Customer Care Commitments */}
+              {/* 4 Customer Care Commitments */}
               <div className="bg-[#f0ede9] rounded-2xl p-4 border border-[#ebe8e3] text-xs space-y-2">
                 <div className="flex items-center space-x-1.5 text-[#74584d] font-semibold">
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Cam kết chất lượng dịch vụ từ Ban Quản Trị GLANZ</span>
+                  <span>Cam kết chất lượng dịch vụ từ Ban Quản Trị Alps</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px] text-[#46464a]">
                   <div className="bg-white/80 rounded-xl p-2.5 border border-[#ebe8e3]">
@@ -407,7 +407,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                   <p className="text-xs text-[#46464a] max-w-md mx-auto leading-relaxed">
                     Mã phiếu hỗ trợ của bạn là{' '}
                     <span className="font-bold text-[#74584d]">{submittedTicket.id}</span> (ghi nhận lúc{' '}
-                    {submittedTicket.time}). Chuyên viên CSKH GLANZ đang tiếp nhận hồ sơ và sẽ chủ động gọi điện
+                    {submittedTicket.time}). Chuyên viên CSKH Alps đang tiếp nhận hồ sơ và sẽ chủ động gọi điện
                     hoặc nhắn tin cho bạn qua số điện thoại <strong className="text-[#1c1c19]">{senderPhone}</strong> trong vòng 15 phút.
                   </p>
                   <div className="pt-3">
@@ -555,7 +555,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
             <div className="space-y-3 animate-fade-in">
               <div className="bg-white rounded-2xl p-4 border border-[#202022]/8 mb-2">
                 <h4 className="font-serif text-sm font-semibold text-[#1c1c19]">
-                  Các câu hỏi thường gặp về sản phẩm & dịch vụ GLANZ
+                  Các câu hỏi thường gặp về sản phẩm & dịch vụ Alps
                 </h4>
                 <p className="text-xs text-[#77767b] mt-0.5">
                   Bấm vào từng câu hỏi để xem giải đáp nhanh từ đội ngũ chuyên gia Thụy Sĩ.
@@ -614,7 +614,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
         <div className="p-3 sm:p-4 bg-[#ffffff] border-t border-[#ebe8e3] flex flex-col sm:flex-row items-center justify-between text-xs text-[#77767b] gap-2 shrink-0">
           <div className="flex items-center space-x-2 text-[11px]">
             <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />
-            <span>GLANZ Skincare Pure Essence • Zurich, Switzerland</span>
+            <span>Alps Skincare Pure Essence • Zurich, Switzerland</span>
           </div>
 
           <button

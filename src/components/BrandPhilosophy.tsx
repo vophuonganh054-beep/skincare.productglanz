@@ -24,7 +24,7 @@ export const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ isMobileFrame 
 
         {/* Description */}
         <p className="text-xs sm:text-sm md:text-base text-[#46464a] font-light leading-relaxed max-w-2xl mx-auto mt-3 sm:mt-4">
-          Mỗi công thức GLANZ được chưng cất tỉ mỉ tại Zurich, phối hợp giữa tinh hoa thảo mộc thượng hạng và công nghệ dưỡng sáng sinh học phân tử giúp đánh thức năng lượng tinh khôi bên trong bạn.
+          Mỗi công thức Alps được chưng cất tỉ mỉ tại Zurich, phối hợp giữa tinh hoa thảo mộc thượng hạng và công nghệ dưỡng sáng sinh học phân tử giúp đánh thức năng lượng tinh khôi bên trong bạn.
         </p>
 
         {/* Key Metrics / Stats */}
@@ -57,7 +57,7 @@ export const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ isMobileFrame 
           </div>
         </div>
 
-        {/* Swiss Heritage Badges */}
+        {/* Quality Badges */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[11px] text-[#77767b]">
           <span className="flex items-center space-x-1.5 bg-white/60 px-3 py-1 rounded-full border border-[#ebe8e3]">
             <ShieldCheck className="w-3.5 h-3.5 text-[#8a9a86]" />

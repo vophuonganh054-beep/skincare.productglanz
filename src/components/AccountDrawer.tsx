@@ -186,7 +186,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
           <div className="flex items-center space-x-2">
             <span className="text-xs text-[#74584d]">✦</span>
             <h3 className="font-serif text-lg font-normal text-[#1c1c19]">
-              {user ? 'Tài Khoản Thành Viên GLANZ' : 'Đăng Nhập / Đăng Ký'}
+              {user ? 'Tài Khoản Thành Viên ALPS' : 'Đăng Nhập / Đăng Ký'}
             </h3>
           </div>
           <button
@@ -254,7 +254,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                   <User className="w-6 h-6 stroke-[1.5]" />
                 </div>
                 <h4 className="font-serif text-lg font-normal text-[#1c1c19]">
-                  GLANZ Pure Privileges
+                  Alps Pure Privileges
                 </h4>
                 <p className="text-xs text-[#77767b] max-w-xs mx-auto">
                   Đăng nhập để theo dõi danh mục đã mua, lưu địa chỉ giao hàng và đổi thông tin nhận hàng nhanh chóng.
@@ -457,7 +457,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     Chưa có đơn hàng nào
                   </h4>
                   <p className="text-xs text-[#77767b] max-w-xs mx-auto">
-                    Khám phá ngay bộ sưu tập chăm sóc da thuần chay chuẩn Thụy Sĩ của GLANZ.
+                    Khám phá ngay bộ sưu tập chăm sóc da thuần chay chuẩn Thụy Sĩ của ALPS.
                   </p>
                   <button
                     onClick={onClose}
@@ -905,12 +905,12 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                 </div>
               </div>
 
-              {/* Swiss Guarantee note */}
+              {/* Quality Guarantee note */}
               <div className="bg-[#f0ede9] rounded-2xl p-4 text-xs text-[#46464a] leading-relaxed border border-[#ebe8e3]">
                 <p className="font-serif font-medium text-[#1c1c19] mb-1">
                   Cam kết giao hàng & bảo chứng Thụy Sĩ:
                 </p>
-                Đơn hàng sẽ được chuyển tới đúng địa chỉ của bạn trong 24-48 giờ với quy chuẩn đóng gói chuyên dụng, miễn phí đổi trả trong 30 ngày nếu phát hiện bất kỳ kích ứng nào.
+                Đơn hàng sẽ được chuyển tới đúng địa chỉ của bạn trong 24-48 giờ với quy chuẩn vận chuyển bảo mật, miễn phí đổi trả trong 30 ngày nếu phát hiện bất kỳ kích ứng nào.
               </div>
 
               {/* Customer Care Banner */}
