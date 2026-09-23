@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CATEGORIES } from '../data/products';
 import { Product } from '../types';
 import { ProductCard } from './ProductCard';
+import { AlpsIcon } from './AlpsLogo';
 
 interface CatalogSectionProps {
   products: Product[];
@@ -54,8 +55,9 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
           <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-normal text-[#1c1c19] tracking-tight">
             Danh Mục Sản Phẩm
           </h2>
-          <p className="text-[11px] sm:text-xs text-[#77767b] font-light">
-            Dược mỹ phẩm thuần chay tế bào gốc sông băng Thụy Sĩ
+          <p className="inline-flex items-center space-x-1.5 text-[11px] sm:text-xs text-[#77767b] font-light mt-0.5">
+            <AlpsIcon className="w-3 h-3 text-[#74584d]" color="#74584d" />
+            <span>Bộ sưu tập dược mỹ phẩm thuần khiết ALPS Skincare</span>
           </p>
         </div>
 

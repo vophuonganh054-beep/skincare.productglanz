@@ -32,22 +32,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [promoMessage, setPromoMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
   // Recipient and delivery address state
-  const [buyerName, setBuyerName] = useState(user?.name || 'Phương Anh');
-  const [phone, setPhone] = useState(user?.phone || '0908 123 489');
-  const [address, setAddress] = useState(
-    user?.address ||
-      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'
-  );
+  const [buyerName, setBuyerName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || '');
+  const [address, setAddress] = useState(user?.address || '');
   const [isEditingAddress, setIsEditingAddress] = useState(false);
 
   useEffect(() => {
     if (user) {
-      setBuyerName(user.name || 'Phương Anh');
-      setPhone(user.phone || '0908 123 489');
-      setAddress(
-        user.address ||
-          'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'
-      );
+      setBuyerName(user.name || '');
+      setPhone(user.phone || '');
+      setAddress(user.address || '');
+    } else {
+      setBuyerName('');
+      setPhone('');
+      setAddress('');
     }
   }, [user, isOpen]);
 
@@ -74,12 +72,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const handleCheckout = () => {
-    const finalBuyer = buyerName.trim() || user?.name || 'Phương Anh';
-    const finalPhone = phone.trim() || user?.phone || '0908 123 489';
-    const finalAddress =
-      address.trim() ||
-      user?.address ||
-      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh';
+    const finalBuyer = buyerName.trim() || user?.name || '';
+    const finalPhone = phone.trim() || user?.phone || '';
+    const finalAddress = address.trim() || user?.address || '';
 
     // Also sync to profile if user is logged in
     if (onUpdateProfile && (finalBuyer !== user?.name || finalPhone !== user?.phone || finalAddress !== user?.address)) {

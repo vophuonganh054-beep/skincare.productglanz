@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, Award, HeartHandshake, Phone, Headphones, Mail, MapPin } from 'lucide-react';
+import { AlpsLogo } from './AlpsLogo';
 
 interface FooterProps {
   isMobileFrame?: boolean;
@@ -14,12 +15,13 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-[#31302d]">
           {/* Brand Column */}
           <div className="md:col-span-1 space-y-3">
-            <div className="flex items-center space-x-1.5">
-              <span className="text-sm text-[#fed8c9]">✦</span>
-              <span className="font-serif text-xl tracking-[0.25em] text-white">ALPS</span>
-            </div>
-            <div className="text-[9px] uppercase tracking-[0.25em] text-[#898789]">
-              SKINCARE • PURE ESSENCE
+            <div className="flex items-center space-x-2">
+              <AlpsLogo
+                iconColor="#fed8c9"
+                textColor="text-white"
+                subtitle="SKINCARE • PURE ESSENCE"
+                className="items-start text-left"
+              />
             </div>
             <p className="text-xs text-[#c7c6ca] font-light leading-relaxed">
               Thương hiệu dược mỹ phẩm thuần chay tiên phong chưng cất tại Zurich, Thụy Sĩ. Đánh thức vẻ rạng ngời thuần khiết của làn da.
@@ -65,8 +67,14 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               </li>
               <li className="flex items-center space-x-2">
                 <span className="text-[#fed8c9]">Email CSKH:</span>
-                <a href="mailto:cskh@alps.vn" className="hover:text-white transition-colors">
-                  cskh@alps.vn
+                <a href="mailto:cskh@alps.id.vn" className="hover:text-white transition-colors">
+                  cskh@alps.id.vn
+                </a>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="text-[#fed8c9]">Website:</span>
+                <a href="https://alps.id.vn" target="_blank" rel="noopener noreferrer" className="hover:text-[#fed8c9] text-white font-medium transition-colors">
+                  alps.id.vn
                 </a>
               </li>
               <li
@@ -161,9 +169,9 @@ export const Footer: React.FC<FooterProps> = ({ isMobileFrame = false, onOpenSup
               <span className="hover:text-white cursor-pointer">Hotline: 1900 8899</span>
             )}
             <span>•</span>
-            <a href="mailto:cskh@alps.vn" className="hover:text-white transition-colors">cskh@alps.vn</a>
+            <a href="mailto:cskh@alps.id.vn" className="hover:text-white transition-colors">cskh@alps.id.vn</a>
             <span>•</span>
-            <a href="https://alps.vn" className="hover:text-[#fed8c9] text-white font-medium transition-colors">alps.vn</a>
+            <a href="https://alps.id.vn" target="_blank" rel="noopener noreferrer" className="hover:text-[#fed8c9] text-white font-medium transition-colors">alps.id.vn</a>
           </div>
         </div>
       </div>

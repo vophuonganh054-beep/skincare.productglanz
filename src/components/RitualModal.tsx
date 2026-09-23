@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, Check, ArrowRight, Sparkles, Droplet } from 'lucide-react';
+import { AlpsIcon } from './AlpsLogo';
 import { ROUTINE_STEPS, PRODUCTS } from '../data/products';
 import { Product } from '../types';
 
@@ -29,8 +30,9 @@ export const RitualModal: React.FC<RitualModalProps> = ({
         {/* Header */}
         <div className="p-5 sm:p-6 bg-white border-b border-[#202022]/8 flex items-center justify-between">
           <div>
-            <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#74584d]">
-              ALPS RITUAL • THỤY SĨ
+            <span className="inline-flex items-center space-x-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-[#74584d]">
+              <AlpsIcon className="w-3.5 h-3.5" color="#74584d" />
+              <span>NGHI THỨC ALPS RITUAL</span>
             </span>
             <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#1c1c19]">
               Nghi Thức Dưỡng Sáng Tự Nhiên {ROUTINE_STEPS.length} Bước

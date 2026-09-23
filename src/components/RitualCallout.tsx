@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flower2, ChevronRight } from 'lucide-react';
+import { AlpsIcon } from './AlpsLogo';
 
 interface RitualCalloutProps {
   onOpenRitual: () => void;
@@ -32,8 +33,11 @@ export const RitualCallout: React.FC<RitualCalloutProps> = ({ onOpenRitual, isMo
 
         {/* Right Label */}
         <div className="flex items-center space-x-2 text-right">
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#77767b] font-semibold">ALPS</div>
+          <div className="flex flex-col items-end">
+            <div className="flex items-center space-x-1 text-[10px] uppercase tracking-[0.2em] text-[#77767b] font-semibold">
+              <AlpsIcon className="w-3 h-3" color="#74584d" />
+              <span>ALPS</span>
+            </div>
             <div className="text-[11px] sm:text-xs uppercase tracking-[0.15em] font-serif text-[#74584d] font-medium">RITUAL</div>
           </div>
           <ChevronRight className="w-4 h-4 text-[#77767b] group-hover:translate-x-0.5 transition-transform" />

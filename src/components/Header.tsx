@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Bell, ShoppingBag, Heart, Smartphone, Monitor, Sparkles, X, User, Headphones } from 'lucide-react';
+import { AlpsLogo } from './AlpsLogo';
 import { ViewMode, ActiveTab, UserProfile } from '../types';
 
 interface HeaderProps {
@@ -164,20 +165,16 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* Center: Brand Logo */}
+        {/* Center: Brand Logo with Alps Mountain Peak Icon */}
         <div
           onClick={() => onSelectTab('home')}
-          className="cursor-pointer text-center select-none group"
+          className="cursor-pointer text-center select-none group py-1"
         >
-          <div className="flex items-center justify-center space-x-1.5">
-            <span className="text-xs text-[#74584d]">✦</span>
-            <span className="font-serif text-lg md:text-xl font-normal tracking-[0.28em] text-[#1c1c19] ml-1 group-hover:text-[#74584d] transition-colors">
-              ALPS
-            </span>
-          </div>
-          <div className="text-[8px] md:text-[9px] tracking-[0.25em] text-[#77767b] font-light uppercase">
-            PURE ESSENCE
-          </div>
+          <AlpsLogo
+            iconColor="#74584d"
+            textColor="text-[#1c1c19] group-hover:text-[#74584d] transition-colors"
+            subtitle="PURE ESSENCE"
+          />
         </div>
 
         {/* Right Side Controls */}

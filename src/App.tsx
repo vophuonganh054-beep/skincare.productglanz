@@ -49,23 +49,29 @@ export default function App() {
     new Set(['serum-radiance', 'cream-regenerating'])
   );
 
-  // Dynamic User Profile State (Logged In / Logged Out)
+  // Dynamic User Profile State (Logged out by default per user instruction)
   const [user, setUser] = useState<UserProfile | null>(() => {
     try {
       const saved = localStorage.getItem('alps_user_profile');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Clear previous default account to satisfy user request "đăng xuất tài khoản tôi ra"
+        if (parsed?.email === 'vophuonganh054@gmail.com') {
+          localStorage.removeItem('alps_user_profile');
+          return null;
+        }
+        if (parsed?.isLoggedIn) return parsed;
+      }
     } catch {}
-    return {
-      name: 'Phương Anh',
-      email: 'vophuonganh054@gmail.com',
-      phone: '0908 123 489',
-      address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
-      tier: 'Hội Viên Alps Pure Privileges',
-      points: 1250,
-      avatarInitials: 'PA',
-      isLoggedIn: true,
-    };
+    return null;
   });
+
+  // Pending purchase action when customer is prompted to log in before purchasing
+  const [pendingPurchaseAction, setPendingPurchaseAction] = useState<{
+    type: 'buy_now' | 'cart';
+    product?: Product;
+    quantity?: number;
+  } | null>(null);
 
   // Dynamic Order History State (Danh mục đã mua)
   const [orders, setOrders] = useState<Order[]>(() => {
@@ -153,7 +159,22 @@ export default function App() {
       phone: '0908 123 489',
       address: 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
     });
+    setIsAccountOpen(false);
     showToast(`Đăng nhập thành công! Chào mừng ${name}`);
+
+    // If customer clicked Buy Now or Checkout prior to logging in, resume it immediately
+    if (pendingPurchaseAction) {
+      if (pendingPurchaseAction.type === 'buy_now' && pendingPurchaseAction.product) {
+        setCheckoutItems([
+          { product: pendingPurchaseAction.product, quantity: pendingPurchaseAction.quantity || 1 },
+        ]);
+        setIsCheckoutOpen(true);
+      } else if (pendingPurchaseAction.type === 'cart') {
+        setCheckoutItems(cart);
+        setIsCheckoutOpen(true);
+      }
+      setPendingPurchaseAction(null);
+    }
   };
 
   const handleLogout = () => {
@@ -271,18 +292,33 @@ export default function App() {
     showToast(`Đã thêm ${order.items.length} sản phẩm từ đơn #${order.orderNumber} vào giỏ hàng`);
   };
 
-  // BUY NOW Action: Immediately launches checkout modal with this product
+  // BUY NOW Action: Customer must be logged in to purchase!
   const handleBuyNow = (product: Product, quantity = 1, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    if (!user || !user.isLoggedIn) {
+      setPendingPurchaseAction({ type: 'buy_now', product, quantity });
+      setAccountInitialTab('profile');
+      setIsAccountOpen(true);
+      showToast('Quý khách vui lòng đăng nhập tài khoản để tiến hành mua hàng');
+      return;
+    }
     setCheckoutItems([{ product, quantity }]);
     setIsCheckoutOpen(true);
     showToast(`Chuyển đến thanh toán: ${product.name}`);
   };
 
-  // Open checkout from cart
+  // Open checkout from cart: Customer must be logged in to purchase!
   const handleOpenCheckoutFromCart = () => {
     if (cart.length === 0) {
       showToast('Giỏ hàng của bạn đang trống.');
+      return;
+    }
+    if (!user || !user.isLoggedIn) {
+      setIsCartOpen(false);
+      setPendingPurchaseAction({ type: 'cart' });
+      setAccountInitialTab('profile');
+      setIsAccountOpen(true);
+      showToast('Quý khách vui lòng đăng nhập tài khoản để tiến hành đặt hàng');
       return;
     }
     setCheckoutItems(cart);
@@ -301,9 +337,9 @@ export default function App() {
     setOrders((prev) => [order, ...prev]);
     setLatestOrderNumber(order.orderNumber);
     setLatestRecipient({
-      name: order.buyerName || user?.name || 'Phương Anh',
-      phone: order.phone || user?.phone || '0908 123 489',
-      address: order.shippingAddress || user?.address || 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh',
+      name: order.buyerName || user?.name || 'Khách Hàng',
+      phone: order.phone || user?.phone || '',
+      address: order.shippingAddress || user?.address || '',
     });
 
     // If order was placed from entire cart, clear the cart
@@ -325,12 +361,9 @@ export default function App() {
   const handleCheckoutSuccess = (recipientInfo?: { buyerName: string; phone: string; address: string }) => {
     if (cart.length === 0) return;
 
-    const buyerName = recipientInfo?.buyerName || user?.name || 'Phương Anh';
-    const phone = recipientInfo?.phone || user?.phone || '0908 123 489';
-    const shippingAddress =
-      recipientInfo?.address ||
-      user?.address ||
-      'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh';
+    const buyerName = recipientInfo?.buyerName || user?.name || 'Khách Hàng';
+    const phone = recipientInfo?.phone || user?.phone || '';
+    const shippingAddress = recipientInfo?.address || user?.address || '';
 
     setLatestRecipient({
       name: buyerName,
@@ -683,6 +716,11 @@ export default function App() {
         onCompleteOrder={handleCompleteOrder}
         onShowToast={showToast}
         onOpenPolicies={handleOpenPolicies}
+        onOpenLogin={() => {
+          setIsCheckoutOpen(false);
+          setAccountInitialTab('profile');
+          setIsAccountOpen(true);
+        }}
       />
 
       {/* Policies Modal (Đổi trả, Bảo mật, Vận chuyển) */}
@@ -739,12 +777,17 @@ export default function App() {
         onOpenSupport={() => setIsSupportOpen(true)}
       />
 
-      {/* Customer Support Center Modal (CSKH 24/7) */}
+      {/* Customer Support Center Modal (CSKH 24/7 & AI) */}
       <CustomerSupportModal
         isOpen={isSupportOpen}
         onClose={() => setIsSupportOpen(false)}
         user={user}
         onShowToast={showToast}
+        onOpenLogin={() => {
+          setIsSupportOpen(false);
+          setAccountInitialTab('profile');
+          setIsAccountOpen(true);
+        }}
       />
 
       {/* Floating Toast Notification */}

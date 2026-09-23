@@ -17,12 +17,15 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { UserProfile } from '../types';
+import { AICustomerSupportChat } from './AICustomerSupportChat';
 
 interface CustomerSupportModalProps {
   isOpen: boolean;
   onClose: () => void;
   user: UserProfile | null;
   onShowToast: (msg: string) => void;
+  onOpenLogin?: () => void;
+  initialTab?: 'ai_chat' | 'contact' | 'ticket' | 'faq';
 }
 
 export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
@@ -30,8 +33,10 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
   onClose,
   user,
   onShowToast,
+  onOpenLogin,
+  initialTab = 'ai_chat',
 }) => {
-  const [activeTab, setActiveTab] = useState<'contact' | 'ticket' | 'faq'>('contact');
+  const [activeTab, setActiveTab] = useState<'ai_chat' | 'contact' | 'ticket' | 'faq'>(initialTab);
 
   // Ticket form state
   const [ticketTopic, setTicketTopic] = useState('Tư vấn chăm sóc da & chọn sản phẩm');
@@ -125,6 +130,21 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
           {/* Sub Navigation Tabs */}
           <div className="flex items-center space-x-1 sm:space-x-2 mt-4 pt-3 border-t border-white/10 text-xs overflow-x-auto scrollbar-none">
             <button
+              onClick={() => setActiveTab('ai_chat')}
+              className={`px-3.5 py-1.5 rounded-full font-medium transition-all whitespace-nowrap flex items-center space-x-1.5 ${
+                activeTab === 'ai_chat'
+                  ? 'bg-[#fed8c9] text-[#1c1c19] shadow-xs font-semibold'
+                  : 'text-[#fed8c9] hover:text-white bg-white/10 border border-[#fed8c9]/30'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />
+              <span>Chat AI Alps 24/7</span>
+              <span className="text-[9px] bg-red-500 text-white px-1.5 py-0.2 rounded-full font-bold">
+                MỚI
+              </span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('contact')}
               className={`px-3.5 py-1.5 rounded-full font-medium transition-all whitespace-nowrap flex items-center space-x-1.5 ${
                 activeTab === 'contact'
@@ -133,7 +153,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
               }`}
             >
               <Phone className="w-3.5 h-3.5" />
-              <span>Liên Hệ Nhanh 24/7</span>
+              <span>Liên Hệ Nhanh</span>
             </button>
 
             <button
@@ -145,7 +165,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
               }`}
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Gửi Yêu Cầu CSKH</span>
+              <span>Gửi Phiếu Hỗ Trợ</span>
             </button>
 
             <button
@@ -163,7 +183,13 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="overflow-y-auto p-5 sm:p-6 space-y-6 flex-grow text-[#1c1c19] bg-[#fcf9f4]">
+        <div className="overflow-y-auto p-4 sm:p-5 flex-grow text-[#1c1c19] bg-[#fcf9f4]">
+          {/* TAB 0: CHAT AI TƯ VẤN KHÁCH HÀNG 24/7 */}
+          {activeTab === 'ai_chat' && (
+            <div className="animate-fade-in">
+              <AICustomerSupportChat user={user} onOpenLogin={onOpenLogin} />
+            </div>
+          )}
           {/* TAB 1: LIÊN HỆ TRỰC TIẾP */}
           {activeTab === 'contact' && (
             <div className="space-y-6 animate-fade-in">
@@ -278,7 +304,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
 
                   {/* Email Support */}
                   <a
-                    href="mailto:cskh@alps.vn"
+                    href="mailto:cskh@alps.id.vn"
                     className="p-3 bg-[#fcf9f4] hover:bg-[#f5f1eb] rounded-xl border border-[#ebe8e3] transition-all flex items-center justify-between group"
                   >
                     <div className="flex items-center space-x-2.5">
@@ -289,7 +315,7 @@ export const CustomerSupportModal: React.FC<CustomerSupportModalProps> = ({
                         <div className="font-semibold text-xs text-[#1c1c19] group-hover:text-[#74584d] transition-colors">
                           Email Hộp Thư CSKH
                         </div>
-                        <div className="text-[10px] text-[#77767b]">cskh@alps.vn</div>
+                        <div className="text-[10px] text-[#77767b]">cskh@alps.id.vn</div>
                       </div>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#77767b] group-hover:text-[#1c1c19]" />

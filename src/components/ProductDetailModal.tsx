@@ -108,7 +108,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 {/* Brand & Volume */}
                 <div className="flex items-center justify-between">
                   <span className="text-xs uppercase tracking-[0.2em] text-[#74584d] font-semibold">
-                    ALPS ZURICH • {product.capacity}
+                    ALPS • {product.capacity}
                   </span>
                   <span className="text-xs text-[#8a9a86] font-medium bg-[#8a9a86]/10 px-2.5 py-0.5 rounded-full">
                     {product.inStock ? 'Còn hàng' : 'Hết hàng'}

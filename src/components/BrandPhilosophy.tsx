@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Sparkles, Leaf } from 'lucide-react';
+import { AlpsIcon } from './AlpsLogo';
 
 interface BrandPhilosophyProps {
   isMobileFrame?: boolean;
@@ -13,8 +14,9 @@ export const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ isMobileFrame 
         <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#fed8c9]/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* Section Label */}
-        <span className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#74584d] uppercase block mb-2">
-          CẢM HỨNG NGHỆ THUẬT
+        <span className="inline-flex items-center space-x-1.5 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-[#74584d] uppercase mb-2">
+          <AlpsIcon className="w-3.5 h-3.5" color="#74584d" />
+          <span>CẢM HỨNG NGHỆ THUẬT ALPS</span>
         </span>
 
         {/* Heading */}

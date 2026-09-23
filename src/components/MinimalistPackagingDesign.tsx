@@ -15,7 +15,7 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
     'Nước Tẩy Trang ALPS: Công nghệ Micellar với nước khoáng sông băng, làm sạch sâu cặn trang điểm & bụi mịn PM2.5, 0% cồn dịu nhẹ',
     'Kem Chống Nắng ALPS SPF 50+ PA++++: Màng lọc phổ rộng thế hệ mới, chống tia UVA/UVB và ánh sáng xanh, nâng tông trong suốt không nhờn rít',
     'Thủy tinh đúc mờ 2 lớp & nắp kim loại champagne phay xước: Cản 99.8% tia cực tím, bảo toàn dược tính hoạt chất sinh học',
-    'Khắc chìm nhũ ALPS vi phân tử tối giản, lược bỏ hoàn toàn từ SWISS theo chuẩn Quiet Luxury',
+    'Thiết kế tối giản thuần khiết: Chỉ in tên thương hiệu ALPS và công năng tinh gọn, giữ trọn thẩm mỹ Quiet Luxury',
   ];
 
   return (
@@ -84,7 +84,7 @@ export const MinimalistPackagingDesign: React.FC<MinimalistPackagingDesignProps>
                 Bộ Đôi Chăm Sóc Thiết Yếu ALPS
               </h3>
               <p className="text-xs sm:text-sm text-[#5f5d58] mt-2.5 leading-relaxed font-light">
-                Hai bước cốt lõi tạo nên làn da khỏe mạnh: Nước tẩy trang làm dịu loại bỏ 99% bụi mịn và lớp makeup cứng đầu; cùng Kem chống nắng kết cấu sữa mỏng nhẹ bảo vệ tế bào da trước nắng hè. Mọi chi tiết thừa và chữ SWISS đã được gỡ bỏ hoàn toàn.
+                Hai bước cốt lõi tạo nên làn da khỏe mạnh: Nước tẩy trang làm dịu loại bỏ 99% bụi mịn và lớp makeup cứng đầu; cùng Kem chống nắng kết cấu sữa mỏng nhẹ bảo vệ tế bào da trước tia bức xạ mặt trời. Bao bì tối giản tinh tế, không in logo thừa trên sản phẩm.
               </p>
             </div>
 

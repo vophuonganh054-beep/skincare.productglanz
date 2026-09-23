@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90" width="100%" height="100%" fill="none">
+  <!-- Dãy núi Alps tối giản nghệ thuật Châu Âu (Continuous elegant curved mountain lines) -->
+  <!-- Đỉnh chính cao nhất ở trung tâm uốn cong mềm mại -->
+  <path
+    d="M32 68 C45 64, 62 40, 74 26 C78 21, 82 21, 86 26 C98 40, 115 64, 128 68"
+    stroke="#b38f5f"
+    stroke-width="2.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Sườn núi tuyết thanh mảnh tự nhiên từ đỉnh chính xuống thung lũng -->
+  <path
+    d="M80 23.5 C81 34, 76 46, 70 58"
+    stroke="#b38f5f"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.8"
+  />
+
+  <!-- Rặng núi phía trước bên trái uốn lượn thoải mềm mại -->
+  <path
+    d="M16 68 C24 64, 38 48, 50 40 C55 36, 61 38, 68 46 C76 56, 84 64, 94 68"
+    stroke="#74584d"
+    stroke-width="2.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Rặng núi phía trước bên phải thoải dài tạo chiều sâu bình yên -->
+  <path
+    d="M66 68 C78 62, 92 46, 106 38 C112 34, 118 36, 126 46 C134 56, 140 64, 144 68"
+    stroke="#74584d"
+    stroke-width="2.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Đường chân trời / mặt hồ băng phẳng lặng thanh khiết -->
+  <path
+    d="M12 68 H148"
+    stroke="#74584d"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    opacity="0.5"
+  />
+</svg>

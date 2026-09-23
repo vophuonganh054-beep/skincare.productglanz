@@ -34,6 +34,7 @@ interface CheckoutModalProps {
   onCompleteOrder: (order: Order) => void;
   onShowToast: (message: string) => void;
   onOpenPolicies?: (tab: PolicyTabType) => void;
+  onOpenLogin?: () => void;
 }
 
 export const CheckoutModal: React.FC<CheckoutModalProps> = ({
@@ -44,14 +45,13 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   onCompleteOrder,
   onShowToast,
   onOpenPolicies,
+  onOpenLogin,
 }) => {
-  // Recipient info
-  const [buyerName, setBuyerName] = useState(user?.name || 'Phương Anh');
-  const [phone, setPhone] = useState(user?.phone || '0908 123 489');
-  const [email, setEmail] = useState(user?.email || 'vophuonganh054@gmail.com');
-  const [address, setAddress] = useState(
-    user?.address || 'Tòa nhà Landmark 81, 720A Điện Biên Phủ, Phường 22, Quận Bình Thạnh, TP. Hồ Chí Minh'
-  );
+  // Recipient info - dynamically bound to logged in user
+  const [buyerName, setBuyerName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [address, setAddress] = useState(user?.address || '');
   const [note, setNote] = useState('');
 
   // Shipping Carrier selection
@@ -105,6 +105,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
+
+    if (!user || !user.isLoggedIn) {
+      setFormError('Quý khách vui lòng đăng nhập tài khoản để tiến hành đặt hàng.');
+      if (onOpenLogin) {
+        onOpenLogin();
+      }
+      return;
+    }
 
     if (!buyerName.trim()) {
       setFormError('Vui lòng nhập họ tên người nhận.');
@@ -198,6 +206,26 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
         {/* Scrollable Form Body */}
         <div className="overflow-y-auto p-4 sm:p-6 md:p-8 flex-grow">
+          {(!user || !user.isLoggedIn) && (
+            <div className="mb-4 p-3.5 bg-[#fed8c9]/25 border border-[#fed8c9]/50 rounded-2xl flex items-center justify-between text-xs text-[#74584d]">
+              <div className="flex items-center space-x-2">
+                <Lock className="w-4 h-4 text-[#74584d] shrink-0" />
+                <span>
+                  Khách hàng cần <strong>đăng nhập tài khoản</strong> để hoàn tất đơn hàng và tích lũy điểm Alps Pure Privileges.
+                </span>
+              </div>
+              {onOpenLogin && (
+                <button
+                  type="button"
+                  onClick={onOpenLogin}
+                  className="px-3 py-1 bg-[#1c1c19] text-white text-[11px] font-semibold rounded-full hover:bg-black transition-all shrink-0 ml-2"
+                >
+                  Đăng nhập
+                </button>
+              )}
+            </div>
+          )}
+
           {formError && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 text-[#ba1a1a] rounded-xl text-xs flex items-center space-x-2">
               <AlertCircle className="w-4 h-4 shrink-0" />

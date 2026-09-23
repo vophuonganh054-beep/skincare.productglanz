@@ -307,7 +307,7 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                         type="text"
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
-                        placeholder="vophuonganh054@gmail.com"
+                        placeholder="khachhang@alps.id.vn"
                         className="w-full text-xs pl-9 pr-3 py-2.5 bg-[#fcf9f4] rounded-xl border border-[#ebe8e3] focus:outline-none focus:ring-1 focus:ring-[#74584d] text-[#1c1c19]"
                       />
                     </div>
@@ -337,18 +337,21 @@ export const AccountDrawer: React.FC<AccountDrawerProps> = ({
                     type="submit"
                     className="w-full py-3 bg-[#202022] hover:bg-black text-white text-xs font-semibold tracking-wider rounded-full shadow-md transition-all active:scale-98 mt-2"
                   >
-                    ĐĂNG NHẬP NGAY
+                    ĐĂNG NHẬP ĐỂ MUA HÀNG
                   </button>
 
-                  {/* 1-click Quick Login Button */}
+                  {/* 1-click Quick Demo Login Button */}
                   <div className="pt-2 border-t border-[#f0ede9]">
                     <button
                       type="button"
-                      onClick={handleQuickLogin}
+                      onClick={() => {
+                        onLogin('Khách Hàng Alps VIP', 'khachhang@alps.id.vn');
+                        setAuthError('');
+                      }}
                       className="w-full py-2.5 bg-[#f6f3ee] hover:bg-[#f0ede9] text-[#74584d] text-xs font-medium rounded-full transition-colors flex items-center justify-center space-x-1.5"
                     >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Đăng nhập nhanh (Tài khoản mẫu Phương Anh)</span>
+                      <Sparkles className="w-3.5 h-3.5 text-[#74584d]" />
+                      <span>Đăng nhập nhanh 1 chạm (Tài khoản mẫu)</span>
                     </button>
                   </div>
                 </form>
